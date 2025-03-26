@@ -57,6 +57,7 @@ RUN chown -R ${USER}:${USER} /home/${USER}
 USER ${USER}
 
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /home/${USER}/.bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> /home/${USER}/.bashrc
 
 WORKDIR /home/${USER}
 
