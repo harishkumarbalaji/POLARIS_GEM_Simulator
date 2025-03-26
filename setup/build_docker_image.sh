@@ -1,0 +1,1 @@
+UID=$(id -u) GID=$(id -g) docker compose -f setup/docker-compose.yaml build
