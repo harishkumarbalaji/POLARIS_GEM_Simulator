@@ -9,7 +9,8 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
-  <arg name="world_name" default="example.world"/> 
+  <arg name="world_name" default="example.world"/>
+  <arg name="vehicle_name" default="e2"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="debug" value="$(arg debug)" />
@@ -32,25 +33,10 @@
     <arg name="x" value="$(arg x)"/>
     <arg name="y" value="$(arg y)"/>
     <arg name="yaw" default="$(arg yaw)"/>
+    <arg name="vehicle_name" value="$(arg vehicle_name)"/>
   </include>
   
   <!-- RViz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gem_launch)/config_rviz/gem_velodyne.rviz" />
 
 </launch>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

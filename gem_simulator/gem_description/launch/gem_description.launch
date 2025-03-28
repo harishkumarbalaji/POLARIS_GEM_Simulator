@@ -2,11 +2,12 @@
 <launch>
 
   <arg name="namespace" default="/"/>
+  <arg name="vehicle_name" default="e2"/>
 
   <group ns="$(arg namespace)">
 
     <!-- robot_description is used by nodes that publish to joint_states. -->
-    <param name="robot_description" command="$(find xacro)/xacro '$(find gem_description)/urdf/gem.urdf.xacro'"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find gem_description)/urdf/gem_$(arg vehicle_name).urdf.xacro'"/>
 
     <!-- Read joint positions from joint_states, then publish the vehicle's state to tf. -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
