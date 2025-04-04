@@ -42,7 +42,7 @@
       <geometry>
         <mesh filename="package://gem_description/meshes/e4/base_link.STL" />
       </geometry>
-      <material name="">
+      <material name="blue">
         <color rgba="0 0 1 1" />
       </material>
     </visual>
@@ -53,6 +53,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
 
   <joint name="base_link" type="fixed">
     <origin xyz="0 0 0.268" rpy="0 0 0" />
@@ -88,6 +92,10 @@
     </collision>
   </link>
 
+  <gazebo reference="top_rack_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <joint name="top_rack_joint" type="fixed">
     <origin xyz="-0.17 0 1.66" rpy="1.5708 0 0" />
     <parent link="base_link" />
@@ -119,6 +127,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="front_rack_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
 
   <joint name="front_rack_joint" type="fixed">
     <origin xyz="1.7594 0 -0.15" rpy="1.5708 0 1.5708" />
@@ -152,6 +164,10 @@
     </collision>
   </link>
 
+  <gazebo reference="rear_rack_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <joint name="rear_rack_joint" type="fixed">
     <origin xyz="-1.7372 0 -0.1" rpy="1.5708 0 -1.5708" />
     <parent link="base_link" />
@@ -183,6 +199,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="headlight_fr_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="headlight_fr_joint" type="fixed">
     <origin xyz="1.1677 -0.5 0.765" rpy="0 0 0" />
@@ -216,6 +236,10 @@
     </collision>
   </link>
 
+  <gazebo reference="headlight_fl_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="headlight_fl_joint" type="fixed">
     <origin xyz="1.1677 0.5 0.765" rpy="0 0 0" />
     <parent link="base_link" />
@@ -247,6 +271,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="turnlight_fl_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="turnlight_fl_joint" type="fixed">
     <origin xyz="1.1731 0.345 0.765" rpy="0 0 0" />
@@ -280,6 +308,10 @@
     </collision>
   </link>
 
+  <gazebo reference="turnlight_fr_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
   <joint name="turnlight_fr_joint" type="fixed">
     <origin xyz="1.1731 -0.345 0.765" rpy="0 0 0" />
     <parent link="base_link" />
@@ -311,6 +343,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="lightbar_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
 
   <joint name="lightbar_joint" type="fixed">
     <origin xyz="-1.07655 0 0.9449" rpy="-1.9138 0 1.5708" />
@@ -345,6 +381,10 @@
     </collision>
   </link>
 
+  <gazebo reference="rear_left_stop_light_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="stoplight_rl_joint" type="fixed">
     <origin xyz="-1.625 0.38 0.423" rpy="0 0 3.1416" />
     <parent link="base_link" />
@@ -376,6 +416,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="rear_right_stop_light_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="stoplight_rr_joint" type="fixed">
     <origin xyz="-1.625 -0.38 0.423" rpy="0 0 3.1416" />
@@ -409,6 +453,10 @@
     </collision>
   </link>
 
+  <gazebo reference="taillight_rl_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
   <joint name="taillight_rl_joint" type="fixed">
     <origin xyz="-1.62 0.32 0.203" rpy="0 0 3.1416" />
     <parent link="base_link" />
@@ -440,6 +488,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="taillight_rr_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
 
   <joint name="taillight_rr_joint" type="fixed">
     <origin xyz="-1.62 -0.32 0.203" rpy="0 0 3.1416" />
@@ -473,6 +525,10 @@
     </collision>
   </link>
 
+  <gazebo reference="i_logo_fl_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
   <joint name="i_logo_fl_joint" type="fixed">
     <origin xyz="0.3966 0.6695 0.4123" rpy="0 0 0" />
     <parent link="base_link" />
@@ -504,6 +560,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="i_logo_rl_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="i_logo_rl_joint" type="fixed">
     <origin xyz="-0.42344 0.6695 0.4123" rpy="0 0 0" />
@@ -537,6 +597,10 @@
     </collision>
   </link>
 
+  <gazebo reference="i_logo_fr_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
   <joint name="i_logo_fr_joint" type="fixed">
     <origin xyz="0.3966 -0.68 0.4123" rpy="0 0 0" />
     <parent link="base_link" />
@@ -568,6 +632,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="i_logo_rr_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="i_logo_rr_joint" type="fixed">
     <origin xyz="-0.42344 -0.68 0.4123" rpy="0 0 0" />
@@ -601,6 +669,10 @@
     </collision>
   </link>
 
+  <gazebo reference="gps_antenna_main_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="gps_antenna_main_joint" type="fixed">
     <origin xyz="-0.01144 0.6525 1.7" rpy="0 0 0" />
     <parent link="base_link" />
@@ -630,6 +702,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="gps_antenna_aux_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="gps_antenna_aux_joint" type="fixed">
     <origin xyz="-0.01144 -0.6525 1.7" rpy="0 0 0" />
@@ -661,6 +737,10 @@
     </collision>
   </link>
 
+  <gazebo reference="top_lidar_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="top_lidar_joint" type="fixed">
     <origin xyz="-0.15144 0 2.08" rpy="0 0 0" />
     <parent link="base_link" />
@@ -690,6 +770,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="front_camera_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="front_camera_joint" type="fixed">
     <origin xyz="0.535 0 1.683" rpy="0 1.5708 0" />
@@ -721,6 +805,10 @@
     </collision>
   </link>
 
+  <gazebo reference="front_lidar_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="front_lidar_joint" type="fixed">
     <origin xyz="0.38206 0 1.71" rpy="0 0 0" />
     <parent link="base_link" />
@@ -750,6 +838,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="front_radar_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="front_radar_joint" type="fixed">
     <origin xyz="1.835 0 0.35" rpy="0 0 0" />
@@ -781,6 +873,10 @@
     </collision>
   </link>
 
+  <gazebo reference="imu_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <joint name="imu_joint" type="fixed">
     <origin xyz="-0.0044387 0 0.18294" rpy="0 0 0" />
     <parent link="base_link" />
@@ -797,6 +893,10 @@
       <inertia ixx="0.004" ixy="0.0" ixz="0.0" iyy="0.004" iyz="0.0" izz="0.004" />
     </inertial>
   </link>
+
+  <gazebo reference="left_steering_hinge_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="left_steering_hinge_joint" type="revolute">
     <parent link="base_link" />
@@ -828,6 +928,10 @@
     </collision>
   </link>
 
+  <gazebo reference="front_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="left_steering_hinge_link" />
     <child link="front_left_wheel_link" />
@@ -845,6 +949,10 @@
       <inertia ixx="0.004" ixy="0.0" ixz="0.0" iyy="0.004" iyz="0.0" izz="0.004" />
     </inertial>
   </link>
+
+  <gazebo reference="right_steering_hinge_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="right_steering_hinge_joint" type="revolute">
     <parent link="base_link" />
@@ -875,6 +983,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="front_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
 
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="right_steering_hinge_link" />
@@ -908,6 +1020,10 @@
     </collision>
   </link>
 
+  <gazebo reference="rear_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <joint name="rear_left_wheel_joint" type="continuous">
     <origin xyz="-1.2904 0.6545 0.027" rpy="0 0 0" />
     <parent link="base_link" />
@@ -939,6 +1055,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="rear_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
 
   <joint name="rear_right_wheel_joint" type="continuous">
     <origin xyz="-1.2904 -0.6535 0.027" rpy="0 0 0" />
@@ -994,6 +1114,10 @@
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
     </inertial>
   </link>
+
+  <gazebo reference="front_single_camera_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <!--
   <joint name="gem_front_camera_joint" type="fixed">
@@ -1069,6 +1193,9 @@
 
   </link>
 
+  <gazebo reference="IMU_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="IMU_joint" type="fixed">
     <origin xyz="-0.246 0 0.05" rpy="0 0 -1.5708"/>
@@ -1103,6 +1230,9 @@
     </inertial>
   </link>
 
+  <gazebo reference="GPS_link">
+    <material>Gazebo/White</material>
+  </gazebo>
 
   <joint name="GPS_joint" type="fixed">
     <origin xyz="-0.246 0 0.05" rpy="0 0 0"/>
@@ -1133,6 +1263,9 @@
     </collision>
   </link>
 
+  <gazebo reference="front_sonar_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="front_sonar_joint" type="fixed">
     <origin xyz="0 0.38 0.065" rpy="0 -1.5708 -1.5708"/>
@@ -1161,6 +1294,10 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="rear_sonar_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="rear_sonar_joint" type="fixed">
     <origin xyz="0 0.38 0.065" rpy="0 -1.5708 -1.5708"/>
