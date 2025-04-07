@@ -270,9 +270,9 @@
     <frameId>GPS_link</frameId>
     <topicName>/gps/fix</topicName>
     <velocityTopicName>/gps/fix_velocity</velocityTopicName>
-    <referenceLatitude>40.09302494</referenceLatitude>
-    <referenceLongitude>-88.23575484</referenceLongitude>
-    <referenceHeading>90</referenceHeading>
+    <referenceLatitude>-21</referenceLatitude>
+    <referenceLongitude>-1.5</referenceLongitude>
+    <referenceHeading>0</referenceHeading>
     <referenceAltitude>220</referenceAltitude>
     <offset>0 0 0</offset>
     <drift>0.001 0.001 0.001</drift>
