@@ -3,6 +3,6 @@
 if [ "$(docker ps -q -f name=ros-noetic-container)" ]; then
     docker exec -it ros-noetic-container bash
 else
-    UID=$(id -u) GID=$(id -g) docker compose -f setup/docker-compose.yaml up -d
+    UID=$(id -u) GID=$(id -g) docker compose -p sim_project -f setup/docker-compose.yaml up -d
     docker exec -it ros-noetic-container bash
 fi

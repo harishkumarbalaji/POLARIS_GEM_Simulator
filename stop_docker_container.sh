@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker compose -f setup/docker-compose.yaml down
+docker compose -p sim_project -f setup/docker-compose.yaml down
