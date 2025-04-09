@@ -1,0 +1,14 @@
+<launch>
+  <arg name="x" default="-20"/>
+  <arg name="y" default="-21"/>
+  <arg name="z" default="0.0"/>
+  
+  <node name="spawn_pedestrian" pkg="gazebo_ros" type="spawn_model"
+    args="-sdf 
+          -file $(find gem_gazebo)/models/person_walking_actor/model.sdf
+          -model person_walking
+          -x $(arg x) 
+          -y $(arg y)
+          -z $(arg z)"
+    respawn="false" output="screen"/>
+</launch>
