@@ -33,7 +33,7 @@
 
   <!-- Spawn Pedestrian with specific coordinates -->
   <arg name="spawn_x" default="-5"/>
-  <arg name="spawn_y" default="-8"/>
+  <arg name="spawn_y" default="-21"/>
 
   <include file="$(find gem_gazebo)/launch/spawn_pedestrian.launch">
     <arg name="x" value="$(arg spawn_x)"/>
