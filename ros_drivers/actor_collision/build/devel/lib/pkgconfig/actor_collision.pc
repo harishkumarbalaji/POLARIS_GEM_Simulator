@@ -1,0 +1,8 @@
+prefix=/home/rohit/host/GemSim/src/POLARIS_GEM_Simulator/ros_drivers/actor_collision/build/devel
+
+Name: actor_collision
+Description: Description of actor_collision
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp gazebo_ros

@@ -263,7 +263,7 @@
         <color rgba="1 0.6 0.2 1" />
       </material>
     </visual>
-    <collision>
+    <collision>sc
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <mesh

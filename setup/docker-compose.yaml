@@ -19,6 +19,8 @@ services:
       - "${HOME}:/home/${USER}/host"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/dev/shm:/dev/shm"
+      - "/run/user/${UID}/bus:/run/user/${UID}/bus:ro"
+      - "/tmp/runtime-${USER}:/tmp/runtime-${USER}:rw"
     environment:
       - DISPLAY=${DISPLAY}
       - USER=${USER}
@@ -27,6 +29,8 @@ services:
       # - LIBGL_ALWAYS_SOFTWARE=1 # Uncomment if you want to use software rendering (No GPU)
       - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
       - NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:-all}
+      - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus
     network_mode: host
     ipc: host
     user: "${UID:-1000}:${GID:-1000}"
