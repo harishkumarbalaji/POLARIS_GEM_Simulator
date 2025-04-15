@@ -1,0 +1,16 @@
+cones:
+  - name: cone_rear_left
+    xyz: [3.8378, -17.75 , 0]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_rear_right
+    xyz: [8.326, -17.75, 0.1]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_left
+    xyz: [3.8378 ,-13.376, 0]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_right
+    xyz: [8.326, -13.376, 0]
+    rpy: [0.0, 0.0, 0.0]

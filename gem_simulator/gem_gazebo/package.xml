@@ -21,6 +21,12 @@
   <depend>controller_manager_msgs</depend>
   <depend>effort_controllers</depend>
   <depend>joint_state_controller</depend>
+
+  <depend>yaml</depend>          <!-- for YAML file reading -->
+  <depend>gazebo_msgs</depend>   <!-- for SpawnModel service -->
+  <exec_depend>python</exec_depend>
+
+
   <depend>tf</depend>
   <export>
     <gazebo_ros gazebo_model_path="${prefix}/models/" gazebo_media_path="${prefix}" />
