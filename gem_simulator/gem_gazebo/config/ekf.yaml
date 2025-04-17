@@ -1,0 +1,40 @@
+# ekf.yaml
+frequency: 30
+sensor_timeout: 0.1
+two_d_mode: true         # Set to true if your vehicle operates on a 2D plane
+transform_time_offset: 0.0
+print_diagnostics: true
+
+# IMU configuration
+imu0: /imu
+imu0_config: [false, false, false,
+              true,  true,  true,
+              false, false, false,
+              false, false, false,
+              true,  true,  true]
+imu0_queue_size: 5
+imu0_differential: false
+
+# GPS configuration
+gps0: /gps/fix
+gps0_config: [true, true, true,
+              false, false, false,
+              false, false, false]
+gps0_queue_size: 5
+gps0_differential: false
+
+# If you have odometry data (e.g., from wheel encoders), you can include it:
+# odom0: /odom
+# odom0_config: [true, true, true,
+#                false, false, false,
+#                false, false, false]
+# odom0_queue_size: 5
+# odom0_differential: false
+
+# Process noise covariance (tune these values based on your simulation)
+process_noise_covariance: [1e-3, 0,    0,    0,    0,    0,
+                           0,    1e-3, 0,    0,    0,    0,
+                           0,    0,    1e-3, 0,    0,    0,
+                           0,    0,    0,    1e-3, 0,    0,
+                           0,    0,    0,    0,    1e-3, 0,
+                           0,    0,    0,    0,    0,    1e-3]

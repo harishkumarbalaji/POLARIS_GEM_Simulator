@@ -1,9 +1,5 @@
-<?xml version="1.0"?>
-
 <launch>
-
   <!-- Gazebo Init -->
-
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
@@ -23,20 +19,27 @@
   </include>
 
   <!-- Spawn the GEM Car -->
-  
   <arg name="x" default="0"/>
   <arg name="y" default="0"/>
   <arg name="yaw" default="0.0"/>
   <arg name="velodyne_points" default="false"/>
-  
+
   <include file="$(find gem_gazebo)/launch/gem_vehicle.launch">
     <arg name="x" value="$(arg x)"/>
     <arg name="y" value="$(arg y)"/>
-    <arg name="yaw" default="$(arg yaw)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
     <arg name="vehicle_name" value="$(arg vehicle_name)"/>
   </include>
-  
+
+  <!-- Spawn Pedestrian with specific coordinates -->
+  <arg name="spawn_x" default="-5"/>
+  <arg name="spawn_y" default="-21"/>
+
+  <include file="$(find gem_gazebo)/launch/spawn_pedestrian.launch">
+    <arg name="x" value="$(arg spawn_x)"/>
+    <arg name="y" value="$(arg spawn_y)"/>
+  </include>
+
   <!-- RViz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gem_launch)/config_rviz/gem_velodyne.rviz" />
-
 </launch>
