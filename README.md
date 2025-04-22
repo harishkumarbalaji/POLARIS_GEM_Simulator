@@ -157,7 +157,7 @@ roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=-1.5 y
 
 <a href="url"><img src="./images/highbay_gazebo.png" width="600"></a>
 
-### E4 Vehicle
+### E4 Vehicle in Parking world
 
 Set the parameter `vehicle_name` to `e4` in the `gem_init.launch` file to use the E4 vehicle. By default, the vehicle name is `e2`.
 
