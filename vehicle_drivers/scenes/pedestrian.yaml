@@ -1,0 +1,32 @@
+# Number of pedestrians define it below
+number_of_pedestrians: 2
+
+# List of pedestrian configurations
+pedestrians:
+  - name: ped1
+    speed: 1.0
+    trajectory:
+      - time: 0.0
+        pose: [-5, 0, 0, 0, 0, 0]     # [x, y, z, roll, pitch, yaw]
+      - time: 5.0
+        pose: [5, 0, 0, 0, 0, 0]
+      - time: 5.5
+        pose: [5, 0, 0, 0, 0, 3.14]
+      - time: 10.5
+        pose: [-5, 0, 0, 0, 0, 3.14]
+      - time: 11.0
+        pose: [-5, 0, 0, 0, 0, 0]
+
+  - name: ped2
+    speed: 1.2
+    trajectory:
+      - time: 0.0
+        pose: [-7, 1, 0, 0, 0, 0]
+      - time: 4.0
+        pose: [3, 1, 0, 0, 0, 0]
+      - time: 4.5
+        pose: [3, 1, 0, 0, 0, 3.14]
+      - time: 9.5
+        pose: [-7, 1, 0, 0, 0, 3.14]
+      - time: 10.0
+        pose: [-7, 1, 0, 0, 0, 0]
