@@ -166,7 +166,7 @@ source devel/setup.bash
 roslaunch gem_launch gem_init.launch vehicle_name:="e4"
 ```
 
-<a href="url"><img src="./images/e4_in_parking_world.jpeg" width="600"></a>
+<a href="url"><img src="./images/e4 in parking world.jpeg" width="600"></a>
 
 
 
