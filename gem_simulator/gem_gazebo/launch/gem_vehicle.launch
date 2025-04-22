@@ -45,18 +45,7 @@
     </node>
 
 
-    <!-- Cone Spawner: dynamically spawns cones based on YAML positions -->
-    <node pkg="gem_gazebo"
-          type="spawn_cones_from_yaml.py"
-          name="spawn_cones"
-          output="screen"
-          required="false">
-      <!-- Pass the Fuel model URI for the cone -->
-      <param name="model_uri" value="https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"/>
-      <!-- Pass the absolute path to the cone positions YAML file -->
-      <param name="yaml_path" value="$(find gem_gazebo)/config/cone_positions.yaml"/>
-    </node>
-    
+
 
   </group>
 
