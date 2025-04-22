@@ -163,10 +163,10 @@ Set the parameter `vehicle_name` to `e4` in the `gem_init.launch` file to use th
 
 ```bash
 source devel/setup.bash
-roslaunch gem_launch gem_init.launch vehicle_name:="e4"
+roslaunch gem_launch gem_init.launch   world_name:=parking.world   vehicle_name:=e4   x:=-9.4   y:=-5.7   yaw:=220
 ```
 
-<a href="url"><img src="./images/e4 in parking world.jpeg" width="600"></a>
+<a href="url"><img src="./images/e4parking.jpeg" width="600"></a>
 
 
 
