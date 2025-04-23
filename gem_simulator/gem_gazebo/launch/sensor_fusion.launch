@@ -1,0 +1,7 @@
+<launch>
+    <!-- Launch the EKF localization node for sensor fusion -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" output="screen">
+        <!-- Load EKF parameters from ekf.yaml -->
+        <rosparam command="load" file="$(find gem_gazebo)/config/ekf.yaml" />
+    </node>
+</launch>
