@@ -38,11 +38,17 @@
           name="spawn_cones"
           output="screen"
           required="false">
-      <!-- Pass the Fuel model URI for the cone -->
-      <param name="model_uri" value="https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"/>
-      <!-- Pass the absolute path to the cone positions YAML file -->
       <param name="yaml_path" value="$(find gem_gazebo)/scenes/$(arg scene_name).yaml"/>
-      </node>
+    </node>
+
+    <node pkg="gem_gazebo"
+      type="spawn_pedestrians_from_yaml.py"
+      name="spawn_pedestrians"
+      output="screen"
+      required="false">
+  <param name="yaml_path"
+         value="$(find gem_gazebo)/scenes/$(arg scene_name).yaml"/>
+    </node>
     
 
   <!-- RViz -->
