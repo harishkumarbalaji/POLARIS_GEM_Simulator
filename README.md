@@ -171,8 +171,24 @@ roslaunch gem_launch gem_init.launch vehicle_name:="e4"
 
 
 
+# Utils Scripts
 
+## set_pos.py
+To set the position and yaw of the E4 vehicle, run the set_pos python script in the utils folder.
+```bash
+python3 set_pos.py --x 12.5  --y -21 --yaw 3.1416 
 
+will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
+
+## generate_waypoints.py
+To manually steer the car and periodically record waypoints to the terminal, run
+
+```bash
+python3 utils/generate_waypoints.py
+```
+The controls are: W/S - forward/back | A/D - left/right | Q - quit
+
+The coordinates may need to be manually transformed to whatever frame you desire
 
 
 
