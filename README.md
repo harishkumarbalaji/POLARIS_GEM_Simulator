@@ -177,6 +177,7 @@ roslaunch gem_launch gem_init.launch vehicle_name:="e4"
 To set the position and yaw of the E4 vehicle, run the set_pos python script in the utils folder.
 ```bash
 python3 set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+```
 
 will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
 
