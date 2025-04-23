@@ -1,42 +1,60 @@
-<?xml version="1.0"?>
-
 <launch>
-
   <!-- Gazebo Init -->
-
-  <arg name="paused" default="false"/>
-  <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
-  <arg name="world_name" default="example.world"/>
-  <arg name="vehicle_name" default="e2"/>
+  <arg name="paused" default="false" />
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="headless" default="false" />
+  <arg name="debug" default="false" />
+  <arg name="world_name" default="example.world" />
+  <arg name="vehicle_name" default="e2" />
+  <arg name="scene_name" default="$(eval arg('world_name').split('.world')[0])" />
+  <arg name="custom_scene" default="false" />
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="headless" value="$(arg headless)"/>
-    <arg name="verbose" value="false"/>
-    <arg name="world_name" value="$(find gem_gazebo)/worlds/$(arg world_name)"/>
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="headless" value="$(arg headless)" />
+    <arg name="verbose" value="false" />
+    <arg name="world_name" value="$(find gem_gazebo)/worlds/$(arg world_name)" />
   </include>
 
   <!-- Spawn the GEM Car -->
-  
-  <arg name="x" default="0"/>
-  <arg name="y" default="0"/>
-  <arg name="yaw" default="0.0"/>
-  <arg name="velodyne_points" default="false"/>
-  
-  <include file="$(find gem_gazebo)/launch/gem_vehicle.launch">
-    <arg name="x" value="$(arg x)"/>
-    <arg name="y" value="$(arg y)"/>
-    <arg name="yaw" default="$(arg yaw)"/>
-    <arg name="vehicle_name" value="$(arg vehicle_name)"/>
-  </include>
-  
-  <!-- RViz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gem_launch)/config_rviz/gem_velodyne.rviz" />
+  <arg name="x" default="0" />
+  <arg name="y" default="0" />
+  <arg name="yaw" default="0.0" />
+  <arg name="velodyne_points" default="false" />
 
+  <include file="$(find gem_gazebo)/launch/gem_vehicle.launch">
+    <arg name="x" value="$(arg x)" />
+    <arg name="y" value="$(arg y)" />
+    <arg name="yaw" value="$(arg yaw)" />
+    <arg name="vehicle_name" value="$(arg vehicle_name)" />
+  </include>
+
+  <!-- Cone Spawner: dynamically spawns cones based on YAML positions -->
+  <node pkg="gem_gazebo"
+    type="spawn_cones_from_yaml.py"
+    name="spawn_cones"
+    output="screen"
+    required="false"
+    if="$(arg custom_scene)">
+    <!-- Pass the absolute path to the cone positions YAML file -->
+    <param name="yaml_path" value="$(find gem_gazebo)/scenes/$(arg scene_name).yaml"/>
+  </node>
+
+  <node pkg="gem_gazebo"
+    type="spawn_pedestrians_from_yaml.py"
+    name="spawn_pedestrians"
+    output="screen"
+    required="false"
+    if="$(arg custom_scene)">
+    <param name="yaml_path"
+      value="$(find gem_gazebo)/scenes/$(arg scene_name).yaml" />
+  </node>
+
+  <!-- RViz -->
+  <node name="rviz" pkg="rviz" type="rviz"
+    args="-d $(find gem_launch)/config_rviz/gem_velodyne.rviz" />
 </launch>

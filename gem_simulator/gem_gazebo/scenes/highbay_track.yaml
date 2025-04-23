@@ -1,0 +1,30 @@
+model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
+
+cones:
+
+  - name: cone_rear_left
+    xyz: [-17, -18.8 , 0]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_rear_right
+    xyz: [-17, -14.8, 0]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_left
+    xyz: [-20.5 ,-18.8, 0]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_right
+    xyz: [-20.5, -14.8, 0]
+    rpy: [0.0, 0.0, 0.0]
+
+pedestrians:
+  - name: pedestrian1
+    trajectory:
+      - [0.0 , -12.5, -16.2, 0, 0, 0, -1.57] #x,y,z,r,p,y
+      - [5.0 , -12.5, -25.0, 0, 0, 0, -1.57]
+      - [5.5 , -12.5, -25.0, 0, 0, 0, 1.57]
+      - [10.5, -12.5, -16.2, 0, 0, 0, 1.57]
+      - [11.0, -12.5, -16.2, 0, 0, 0, -1.57]
+
+

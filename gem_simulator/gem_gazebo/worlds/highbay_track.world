@@ -18,6 +18,7 @@
         <falloff>0</falloff>
       </spot>
     </light>
+
     <road name='road_0'>
       <width>3</width>
       <point>-20 1.84 0.01</point>
@@ -6274,9 +6275,3 @@
     
   </world>
 </sdf>
-
-
-
-
-
-
