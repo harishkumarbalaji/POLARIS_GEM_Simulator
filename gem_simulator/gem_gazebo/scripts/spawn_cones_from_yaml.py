@@ -28,17 +28,18 @@ def main():
 
     # Parameters passed from the launch file
     yaml_path = rospy.get_param("~yaml_path")
-    model_uri = rospy.get_param("~model_uri")
 
     rospy.loginfo("Reading cone list from %s", yaml_path)
     with open(yaml_path, "r") as f:
-        cones = yaml.safe_load(f)["cones"]
+        scene = yaml.safe_load(f)
+        model_uri = scene["model_uri"]
+        cones      = scene["cones"]
+
 
     rospy.wait_for_service("/gazebo/spawn_sdf_model")
     spawn_srv = rospy.ServiceProxy("/gazebo/spawn_sdf_model", SpawnModel)
 
     for cone in cones:
-        # --- Build the initial pose ----------------------------------------
         pose = Pose()
         pose.position.x, pose.position.y, pose.position.z = map(float, cone["xyz"])
         qx, qy, qz, qw = quaternion_from_euler(*map(float, cone["rpy"]))
