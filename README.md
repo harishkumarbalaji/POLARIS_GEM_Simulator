@@ -1,16 +1,10 @@
-### Starter Code of Polaris GEM e2 Simulator for [ECE484](https://publish.illinois.edu/safe-autonomy/) and [CS588](http://luthuli.cs.uiuc.edu/~daf//courses/MAAV-22/588-2022-home.html)
+### Digital Twin Simulator for Polaris GEM e2 and e4 vehicles in University of Illinois Urbana-Champaign
 
-#### University of Illinois at Urbana-Champaign
+This simulator was initially developed by Hang Cui for e2. It is currently under development with the addition and testing of the e4 model using [GEMstack](https://github.com/krishauser/GEMstack) for research and teaching at University of Illinois at Urbana-Champaign.  
 
-#### System: Ubuntu 20.04 + ROS Noetic (Gazebo 11)
-
-#### Author: Hang Cui (hangcui1201@gmail.com)
-
-This simulator was initially developed with ROS Melodic and Gazebo 9 in Ubuntu 18.04 for personal research in fall 2019. The Polaris GEM e2 vehicle was measured and modeled by Hang Cui and Jiaming Zhang using Solidworks. The compatible URDF files of simulator for RViz and Gazebo were constructed by Hang Cui. Later, this project was funded by the [Center of Autonomy](https://autonomy.illinois.edu/) at University of Illinois at Urbana-Champaign. It was further developed and merged into ROS Noetic and Gazeno 11 in the summer of 2021. This simulator is currently under development for research and teaching at University of Illinois at Urbana-Champaign.  
-
-#### Polaris GEM e2 Vehicle
-
-<a href="url"><img src="./images/Polaris_GEM_e2.png" width="600"></a>  
+| Polaris GEM e2 Vehicle                                                | Polaris GEM e4 Vehicle                                                |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| <a href="url"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="url"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
 
 ## Running the stack on Ubuntu 20.04 or 22.04 with Docker
 > [!NOTE]
@@ -26,7 +20,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -36,6 +30,9 @@ If you see the output, you are good to go. Otherwise, you will need to install t
 #### Building the Docker image
 
 To build a Docker image with all these prerequisites, you can use the provided Dockerfile by running.
+
+> [!IMPORTANT]
+> Do not run the Docker scripts (`build_docker_image.sh`, `run_docker_container.sh`, `stop_docker_container.sh`) with `sudo`. Instead, follow the [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to allow non-root users to run Docker commands.
 
 ```bash
 bash setup/build_docker_image.sh
@@ -150,7 +147,7 @@ roslaunch gem_launch gem_init.launch
 
 ```bash
 source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=-1.5 y:=-21 yaw:=3.1416
+roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416
 ```
 
 <a href="url"><img src="./images/highbay_rviz.png" width="600"></a>
@@ -168,15 +165,67 @@ roslaunch gem_launch gem_init.launch   world_name:=parking.world   vehicle_name:
 
 <a href="url"><img src="./images/e4parking.jpeg" width="600"></a>
 
+# Custom Scene
 
+The simulator supports custom scenes with dynamic placement of cones and pedestrians using YAML configuration files.
 
+## Using Custom Scene Feature
+
+To enable the custom scene feature, set the `custom_scene` parameter to `true` when launching the simulator.
+
+This will automatically load the corresponding YAML configuration file (e.g., `highbay_track.yaml`) from the `gem_gazebo/scenes/` directory.
+
+## Creating Custom YAML Configuration Files
+
+The YAML configuration file should specify the positions of cones and trajectories of pedestrians. The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
+
+### Example Configuration Format:
+
+```yaml
+model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
+
+cones:
+  - name: cone1
+    xyz: [x, y, z]
+    rpy: [roll, pitch, yaw]
+  
+  - name: cone2
+    xyz: [x, y, z]
+    rpy: [roll, pitch, yaw]
+
+pedestrians:
+  - name: pedestrian1
+    trajectory:
+      - [time, x, y, z, roll, pitch, yaw] # First waypoint
+      - [time, x, y, z, roll, pitch, yaw] # Second waypoint
+      # Add more waypoints as needed
+```
+
+### Notes:
+- For cones, specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
+- For pedestrians, define a trajectory as a series of waypoints with format: `[time, x, y, z, roll, pitch, yaw]`.
+- The `time` value in pedestrian trajectories represents when the pedestrian should reach that waypoint.
+- Pedestrians will follow the trajectory and loop if configured in the YAML file.
+
+## Example Usage
+
+See the `highbay_track.yaml` file in the `gem_gazebo/scenes/` directory for a complete example.
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416 custom_scene:=true
+```
+
+<video width="600" controls>
+  <source src="./images/custom_scene_highbay.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 # Utils Scripts
 
 ## set_pos.py
 To set the position and yaw of the E4 vehicle, run the set_pos python script in the utils folder.
 ```bash
-python3 set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
 ```
 
 will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
