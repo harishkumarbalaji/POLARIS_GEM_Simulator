@@ -1133,9 +1133,10 @@
     <child link="front_single_camera_link"/>
   </joint>
   
+  <!-- ************************* Corner Cameras ************************* -->
   
-  <!--
-  <link name="stereo_camera_link">
+  <!-- Front Left Corner Camera -->
+  <link name="front_left_corner_camera_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -1156,14 +1157,117 @@
     </inertial>
   </link>
 
+  <gazebo reference="front_left_corner_camera_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
 
-  <joint name="gem_stereo_camera_joint" type="fixed">
-    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
-    <parent link="front_camera_link"/>
-    <child link="stereo_camera_link"/>
+  <joint name="front_left_corner_camera_joint" type="fixed">
+    <origin xyz="0.6 0.165 -0.597" rpy="-1.57 0 0"/>
+    <parent link="top_rack_link"/>
+    <child link="front_left_corner_camera_link"/>
+    <axis xyz="0 0 0" />
   </joint>
-  -->
 
+  <!-- Front Right Corner Camera -->
+  <link name="front_right_corner_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <gazebo reference="front_right_corner_camera_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <joint name="front_right_corner_camera_joint" type="fixed">
+    <origin xyz="0.6 0.165 0.58" rpy="-1.57 0 0"/>
+    <parent link="top_rack_link"/>
+    <child link="front_right_corner_camera_link"/>
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <!-- Rear Left Corner Camera -->
+  <link name="rear_left_corner_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <gazebo reference="rear_left_corner_camera_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <joint name="rear_left_corner_camera_joint" type="fixed">
+    <origin xyz="-0.908 0.165 0.597" rpy="-1.57 3.14 0"/>
+    <parent link="top_rack_link"/>
+    <child link="rear_left_corner_camera_link"/>
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <!-- Rear Right Corner Camera -->
+  <link name="rear_right_corner_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+    
+  </link>
+
+  <gazebo reference="rear_right_corner_camera_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+
+  <joint name="rear_right_corner_camera_joint" type="fixed">
+    <origin xyz="-0.899 0.165 -0.597" rpy="-1.57 3.14 0"/>
+    <parent link="top_rack_link"/>
+    <child link="rear_right_corner_camera_link"/>
+    <axis xyz="0 0 0" />
+  </joint>
+  
   <!-- IMU -->
   <link name="IMU_link">
 
