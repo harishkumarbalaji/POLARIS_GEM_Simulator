@@ -19,6 +19,7 @@ services:
       - "${HOME}:/home/${USER}/host"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/dev/shm:/dev/shm"
+    working_dir: ${CONTAINER_WD:-}
     environment:
       - DISPLAY=${DISPLAY}
       - USER=${USER}

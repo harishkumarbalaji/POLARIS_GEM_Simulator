@@ -5,8 +5,6 @@ ARG USER_GID=1000
 ARG USER=$(whoami)
 ARG DEBIAN_FRONTEND=noninteractive
 
-SHELL ["/bin/bash", "-c"]
-
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y \
@@ -56,9 +54,11 @@ USER root
 RUN chown -R ${USER}:${USER} /home/${USER}
 USER ${USER}
 
+# Add ROS setup to user's bashrc
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /home/${USER}/.bashrc
 RUN echo "source /opt/ros/noetic/setup.bash" >> /home/${USER}/.bashrc
 
 WORKDIR /home/${USER}
 
+# Set container entrypoint
 ENTRYPOINT ["/bin/bash"]
