@@ -6,6 +6,51 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | <a href="url"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="url"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
 
+## Table of Contents
+- [Creating a Workspace](#creating-a-workspace)
+- [Running the stack on Ubuntu 20.04 or 22.04 with Docker](#running-the-stack-on-ubuntu-2004-or-2204-with-docker)
+  - [Prerequisites](#prerequisites)
+  - [Building the Docker image](#building-the-docker-image)
+  - [Running the Docker container](#running-the-docker-container)
+  - [Usage Tips and Instructions](#usage-tips-and-instructions)
+  - [Stopping the Docker container](#stopping-the-docker-container)
+- [Building the Simulator and its packages](#building-the-simulator-and-its-packages)
+- [Running the Simulator](#running-the-simulator)
+  - [Track1 Environment](#track1-environment)
+    - [Demo of Pure Pursuit Controller](#demo-of-pure-pursuit-controller)
+    - [Demo of Stanley Controller](#demo-of-stanley-controller)
+  - [Track2 Environment](#track2-environment)
+  - [Example Environment](#example-environment)
+  - [Highbay Environment](#highbay-environment)
+  - [E4 Vehicle in Parking world](#e4-vehicle-in-parking-world)
+- [Custom Scene](#custom-scene)
+  - [Using Custom Scene Feature](#using-custom-scene-feature)
+  - [Creating Custom YAML Configuration Files](#creating-custom-yaml-configuration-files)
+    - [Example Configuration Format](#example-configuration-format)
+  - [Example Usage](#example-usage)
+- [Utils Scripts](#utils-scripts)
+  - [set\_pos.py](#set_pospy)
+  - [generate\_waypoints.py](#generate_waypointspy)
+
+## Creating a Workspace
+
+Before building the Docker image, you need to create a ROS workspace and clone this repository into it. Follow these steps:
+
+1. Create a new ROS workspace directory:
+```bash
+mkdir -p ~/gem_simulation_ws/src
+cd ~/gem_simulation_ws
+```
+
+2. Clone the repository into the src folder:
+```bash
+cd src
+git clone https://github.com/harishkumarbalaji/POLARIS_GEM_Simulator.git
+cd POLARIS_GEM_Simulator
+```
+
+3. Once you have set up the workspace, you can proceed with building the Docker image as described below.
+
 ## Running the stack on Ubuntu 20.04 or 22.04 with Docker
 > [!NOTE]
 > Make sure to check the Nvidia Driver and supported CUDA version before proceeding by following the steps in the previous section.
@@ -212,19 +257,18 @@ pedestrians:
 See the `highbay_track.yaml` file in the `gem_gazebo/scenes/` directory for a complete example.
 ```bash
 source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416 custom_scene:=true
+roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416 vehicle_name:=e4 custom_scene:=true
 ```
 
-<video width="600" controls>
-  <source src="./images/custom_scene_highbay.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+![Custom Scene Highbay](./images/custom_scene_highbay.gif)
 
 # Utils Scripts
 
 ## set_pos.py
 To set the position and yaw of the E4 vehicle, run the set_pos python script in the utils folder.
 ```bash
+source devel/setup.bash
+cd src/POLARIS_GEM_Simulator
 python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
 ```
 
@@ -234,6 +278,8 @@ will set the vehicle in a position where the loop is aligned with the highbay_ba
 To manually steer the car and periodically record waypoints to the terminal, run
 
 ```bash
+source devel/setup.bash
+cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
 The controls are: W/S - forward/back | A/D - left/right | Q - quit

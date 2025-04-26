@@ -24,6 +24,8 @@ services:
       - USER=${USER}
       - UID=${UID:-1000}
       - GID=${GID:-1000}
+      - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus
       # - LIBGL_ALWAYS_SOFTWARE=1 # Uncomment if you want to use software rendering (No GPU)
       - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
       - NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:-all}
