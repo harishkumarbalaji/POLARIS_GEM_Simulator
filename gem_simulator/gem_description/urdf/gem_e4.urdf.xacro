@@ -1162,8 +1162,8 @@
   </gazebo>
 
   <joint name="front_left_corner_camera_joint" type="fixed">
-    <origin xyz="0.6 0.165 -0.597" rpy="-1.57 0 0"/>
-    <parent link="top_rack_link"/>
+    <origin xyz="0.5 0.6545 1.8" rpy="0 0.785 0.785"/>
+    <parent link="base_link"/>
     <child link="front_left_corner_camera_link"/>
     <axis xyz="0 0 0" />
   </joint>
@@ -1195,8 +1195,8 @@
   </gazebo>
 
   <joint name="front_right_corner_camera_joint" type="fixed">
-    <origin xyz="0.6 0.165 0.58" rpy="-1.57 0 0"/>
-    <parent link="top_rack_link"/>
+    <origin xyz="0.5 -0.6535 1.8" rpy="0 0.785 -0.785"/>
+    <parent link="base_link"/>
     <child link="front_right_corner_camera_link"/>
     <axis xyz="0 0 0" />
   </joint>
@@ -1228,8 +1228,8 @@
   </gazebo>
 
   <joint name="rear_left_corner_camera_joint" type="fixed">
-    <origin xyz="-0.908 0.165 0.597" rpy="-1.57 3.14 0"/>
-    <parent link="top_rack_link"/>
+    <origin xyz="-1.0 0.6545 1.8" rpy="0 0.785 2.356"/>
+    <parent link="base_link"/>
     <child link="rear_left_corner_camera_link"/>
     <axis xyz="0 0 0" />
   </joint>
@@ -1262,8 +1262,8 @@
   </gazebo>
 
   <joint name="rear_right_corner_camera_joint" type="fixed">
-    <origin xyz="-0.899 0.165 -0.597" rpy="-1.57 3.14 0"/>
-    <parent link="top_rack_link"/>
+    <origin xyz="-1.0 -0.6535 1.8" rpy="0 0.785 -2.356"/>
+    <parent link="base_link"/>
     <child link="rear_right_corner_camera_link"/>
     <axis xyz="0 0 0" />
   </joint>
