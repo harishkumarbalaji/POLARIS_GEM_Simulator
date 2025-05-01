@@ -54,9 +54,7 @@ class INSPublisher(object):
         q = current_imu.orientation
         roll, pitch, yaw = tf.transformations.euler_from_quaternion([q.x, q.y, q.z, q.w])
         # convert to degrees
-        ins_msg.roll = roll * 180.0 / math.pi
-        ins_msg.pitch = pitch * 180.0 / math.pi
-        ins_msg.heading = yaw * 180.0 / math.pi
+        ins_msg.roll, ins_msg.pitch, ins_msg.heading = math.degrees(roll), math.degrees(pitch), math.degrees(yaw)
 
         self.ins_pub.publish(ins_msg)
 
