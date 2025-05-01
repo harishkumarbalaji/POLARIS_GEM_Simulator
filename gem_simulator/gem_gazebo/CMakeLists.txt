@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   ackermann_msgs
   std_msgs
+  septentrio_gnss_driver
 )
 
 catkin_package()
