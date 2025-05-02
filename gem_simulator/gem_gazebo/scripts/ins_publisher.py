@@ -45,6 +45,8 @@ class INSPublisher(object):
 
         ins_msg = INSNavGeod()
         ins_msg.header.stamp = current_gps.header.stamp
+        ins_msg.header.frame_id = current_gps.header.frame_id
+        ins_msg.error = current_gps.status.status
 
         ins_msg.latitude = current_gps.latitude
         ins_msg.longitude = current_gps.longitude
