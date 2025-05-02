@@ -4,7 +4,7 @@ import math
 import rospy
 from sensor_msgs.msg import NavSatFix, Imu
 from std_msgs.msg import Header
-from geometry_msgs.msg import Quaternion, Vector3
+from geometry_msgs.msg import Quaternion, Vector3Stamped
 import tf.transformations
 
 from septentrio_gnss_driver.msg import INSNavGeod
@@ -14,10 +14,12 @@ class INSPublisher(object):
     def __init__(self):
         self.latest_gps = None
         self.latest_imu = None
+        self.latest_gps_velocity = None
 
         # Subscribers
         self.gps_sub = rospy.Subscriber("/gps/fix", NavSatFix, self.gps_callback)
         self.imu_sub = rospy.Subscriber("/imu", Imu, self.imu_callback)
+        self.gps_vel_sub = rospy.Subscriber("/gps/fix_velocity", Vector3Stamped, self.gps_vel_callback)
 
         # Publisher
         self.ins_pub = rospy.Publisher("/insnavgeod", INSNavGeod, queue_size=10)
@@ -31,6 +33,12 @@ class INSPublisher(object):
     def imu_callback(self, msg):
         """Sets latest IMU data"""
         self.latest_imu = msg
+    
+    def gps_vel_callback(self, msg):
+        """
+        Sets latest GPS velocity data.
+        """
+        self.latest_gps_velocity = msg
 
     def publish_combined_data(self):
         """
@@ -39,8 +47,9 @@ class INSPublisher(object):
         """
         current_gps = self.latest_gps
         current_imu = self.latest_imu
+        current_gps_velocity = self.latest_gps_velocity
 
-        if not current_gps or not current_imu:
+        if not current_gps or not current_imu or not current_gps_velocity:
             return
 
         ins_msg = INSNavGeod()
@@ -57,7 +66,9 @@ class INSPublisher(object):
         roll, pitch, yaw = tf.transformations.euler_from_quaternion([q.x, q.y, q.z, q.w])
         # convert to degrees
         ins_msg.roll, ins_msg.pitch, ins_msg.heading = math.degrees(roll), math.degrees(pitch), math.degrees(yaw)
-
+        
+        ins_msg.ve, ins_msg.vn, ins_msg.vu = current_gps_velocity.vector.x, current_gps_velocity.vector.y, current_gps_velocity.vector.z
+        
         self.ins_pub.publish(ins_msg)
 
 # Main execution
