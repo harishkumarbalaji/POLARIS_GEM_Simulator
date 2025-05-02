@@ -53,7 +53,10 @@
     <param name="yaml_path"
       value="$(find gem_gazebo)/scenes/$(arg scene_name).yaml" />
   </node>
-
+  
+  <!-- INSNavGeod Publisher Node: Combines IMU and GPS data -->
+  <node pkg="gem_gazebo" type="insnavgeod_publisher.py" name="insnavgeod"/>
+  
   <!-- RViz -->
   <node name="rviz" pkg="rviz" type="rviz"
     args="-d $(find gem_launch)/config_rviz/gem_velodyne.rviz" />
