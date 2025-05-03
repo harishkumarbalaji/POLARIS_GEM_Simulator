@@ -21,5 +21,8 @@ catkin_install_python(PROGRAMS scripts/gem_control.py
 catkin_install_python(PROGRAMS scripts/gem_sensor_info.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+catkin_install_python(PROGRAMS scripts/insnavgeod_publisher.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 install(DIRECTORY config launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
