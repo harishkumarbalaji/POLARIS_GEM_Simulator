@@ -205,15 +205,15 @@
 
   <gazebo reference="front_single_camera_link">
     <sensor type="camera" name="front_single_camera_sensor">
-      <update_rate>30.0</update_rate>
+      <update_rate>23.0</update_rate>
       <camera>
       <!--
       <camera name="front_single_camera"> 
       -->
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1280</width>
+          <height>800</height>
           <!--
           <width>960</width>
           <height>540</height>
@@ -265,7 +265,7 @@
   
   <gazebo>
     <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so">
-    <updateRate>20.0</updateRate>
+    <updateRate>50.0</updateRate>
     <bodyName>GPS_link</bodyName>
     <frameId>GPS_link</frameId>
     <topicName>/gps/fix</topicName>
@@ -424,12 +424,12 @@
   <!-- Front Left Corner Camera -->
   <gazebo reference="front_left_corner_camera_link">
     <sensor type="camera" name="front_left_corner_camera_sensor">
-      <update_rate>30.0</update_rate>
+      <update_rate>48.3</update_rate>
       <camera>
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1920</width>
+          <height>1200</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -462,12 +462,12 @@
   <!-- Front Right Corner Camera -->
   <gazebo reference="front_right_corner_camera_link">
     <sensor type="camera" name="front_right_corner_camera_sensor">
-      <update_rate>30.0</update_rate>
+      <update_rate>48.3</update_rate>
       <camera>
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1920</width>
+          <height>1200</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -500,12 +500,12 @@
   <!-- Rear Left Corner Camera -->
   <gazebo reference="rear_left_corner_camera_link">
     <sensor type="camera" name="rear_left_corner_camera_sensor">
-      <update_rate>30.0</update_rate>
+      <update_rate>48.3</update_rate>
       <camera>
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1920</width>
+          <height>1200</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -538,12 +538,12 @@
   <!-- Rear Right Corner Camera -->
   <gazebo reference="rear_right_corner_camera_link">
     <sensor type="camera" name="rear_right_corner_camera_sensor">
-      <update_rate>30.0</update_rate>
+      <update_rate>48.3</update_rate>
       <camera>
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1920</width>
+          <height>1200</height>
           <format>R8G8B8</format>
         </image>
         <clip>
