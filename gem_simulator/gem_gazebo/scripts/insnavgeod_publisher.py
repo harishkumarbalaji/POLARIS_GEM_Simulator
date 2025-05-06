@@ -13,8 +13,8 @@ from septentrio_gnss_driver.msg import INSNavGeod
 
 GEM_E2 = "gem_e2"
 GEM_E4 = "gem_e4"
-GEM_E2_GNSS_TOPIC = "/lidar1/velodyne_points"
-GEM_E4_GNSS_TOPIC = "/ouster/points"
+GEM_E2_GNSS_TOPIC = "/novatel/inspva"
+GEM_E4_GNSS_TOPIC = "/septentrio_gnss/insnavgeod"
 
 class INSNavGeodPublisher(object):
 
