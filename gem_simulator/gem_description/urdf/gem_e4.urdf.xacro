@@ -1088,8 +1088,8 @@
 
   <!-- *********************************************** Sensors ************************************************ -->
 
-  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
-    <origin xyz="0.02 0.42 0" rpy="1.5708 0 3.1416" /> <!-- 1.5708 3.1416 -->
+  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
+    <origin xyz="0.02 0.25 0" rpy="1.5708 3.1416 3.1416" />
   </xacro:VLP-16>
 
   <!-- ************************* Front Camera ************************* -->
