@@ -212,8 +212,8 @@
       -->
         <horizontal_fov>1.5707963</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>1152</width>
+          <height>720</height>
           <!--
           <width>960</width>
           <height>540</height>
