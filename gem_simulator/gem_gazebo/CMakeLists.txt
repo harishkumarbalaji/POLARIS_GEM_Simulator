@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   ackermann_msgs
   std_msgs
+  septentrio_gnss_driver
 )
 
 catkin_package()
@@ -18,6 +19,9 @@ catkin_install_python(PROGRAMS scripts/gem_control.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 catkin_install_python(PROGRAMS scripts/gem_sensor_info.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+catkin_install_python(PROGRAMS scripts/insnavgeod_publisher.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY config launch

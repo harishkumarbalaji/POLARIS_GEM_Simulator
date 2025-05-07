@@ -28,6 +28,7 @@ RUN apt-get install -y \
     ros-noetic-hector-models \
     ros-noetic-jsk-rviz-plugins \
     ros-noetic-velodyne-simulator \
+    ros-noetic-septentrio-gnss-driver \
     && rm -rf /var/lib/apt/lists/*
 
 ARG USER
