@@ -233,8 +233,8 @@
       <plugin name="front_single_camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>front_single_camera</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
+        <cameraName>zed2/zed_node/rgb</cameraName>
+        <imageTopicName>image_rect_color</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>front_single_camera_link</frameName>
         <hackBaseline>0.07</hackBaseline>

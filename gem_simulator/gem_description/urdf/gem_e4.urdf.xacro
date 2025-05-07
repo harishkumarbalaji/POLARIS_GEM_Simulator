@@ -14,13 +14,13 @@
   <xacro:property name="velodyne_points" value="$(arg velodyne_points)" />
   <xacro:property name="laser_points" value="$(arg laser_points)" />
 
-  <xacro:include filename="$(find gem_description)/urdf/gem.gazebo" />
+  <xacro:include filename="$(find gem_description)/urdf/gem_e4.gazebo" />
 
   <xacro:include filename="$(find gem_description)/urdf/materials.xacro" />
 
   <xacro:include filename="$(find gem_description)/urdf/macros.xacro" />
 
-  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
+  <xacro:include filename="$(find velodyne_description)/urdf/OS1.urdf.xacro" />
 
   <link name="base_footprint">
   </link>
@@ -1088,9 +1088,9 @@
 
   <!-- *********************************************** Sensors ************************************************ -->
 
-  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
-    <origin xyz="0.02 0.42 0" rpy="1.5708 0 3.1416" /> <!-- 1.5708 3.1416 -->
-  </xacro:VLP-16>
+  <xacro:OS1 parent="top_rack_link" name="ouster" topic="/ouster/points" hz="10" samples="440" gpu="true" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
+    <origin xyz="0.02 0.42 0" rpy="1.5708 0 3.1416" />
+  </xacro:OS1>
 
   <!-- ************************* Front Camera ************************* -->
 
@@ -1137,16 +1137,16 @@
   
   <!-- Front Left Corner Camera -->
   <link name="front_left_corner_camera_link">
-    <collision>
+    <!-- <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
-    </collision>
+    </collision> -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
       <material name="red"/>
     </visual>
@@ -1162,7 +1162,7 @@
   </gazebo>
 
   <joint name="front_left_corner_camera_joint" type="fixed">
-    <origin xyz="0.5 0.6545 1.8" rpy="0 0.785 0.785"/>
+    <origin xyz="0.5 0.6545 1.75" rpy="0 0.785 0.785"/>
     <parent link="base_link"/>
     <child link="front_left_corner_camera_link"/>
     <axis xyz="0 0 0" />
@@ -1170,16 +1170,16 @@
 
   <!-- Front Right Corner Camera -->
   <link name="front_right_corner_camera_link">
-    <collision>
+    <!-- <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
-    </collision>
+    </collision> -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
       <material name="green"/>
     </visual>
@@ -1195,7 +1195,7 @@
   </gazebo>
 
   <joint name="front_right_corner_camera_joint" type="fixed">
-    <origin xyz="0.5 -0.6535 1.8" rpy="0 0.785 -0.785"/>
+    <origin xyz="0.5 -0.6535 1.75" rpy="0 0.785 -0.785"/>
     <parent link="base_link"/>
     <child link="front_right_corner_camera_link"/>
     <axis xyz="0 0 0" />
@@ -1203,16 +1203,16 @@
 
   <!-- Rear Left Corner Camera -->
   <link name="rear_left_corner_camera_link">
-    <collision>
+    <!-- <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
-    </collision>
+    </collision> -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
       <material name="blue"/>
     </visual>
@@ -1228,7 +1228,7 @@
   </gazebo>
 
   <joint name="rear_left_corner_camera_joint" type="fixed">
-    <origin xyz="-1.0 0.6545 1.8" rpy="0 0.785 2.356"/>
+    <origin xyz="-1.0 0.6545 1.75" rpy="0 0.785 2.356"/>
     <parent link="base_link"/>
     <child link="rear_left_corner_camera_link"/>
     <axis xyz="0 0 0" />
@@ -1236,16 +1236,16 @@
 
   <!-- Rear Right Corner Camera -->
   <link name="rear_right_corner_camera_link">
-    <collision>
+    <!-- <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
-    </collision>
+    </collision> -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.02 0.01"/>
       </geometry>
       <material name="yellow"/>
     </visual>
@@ -1254,7 +1254,6 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
     </inertial>
-    
   </link>
 
   <gazebo reference="rear_right_corner_camera_link">
@@ -1262,22 +1261,50 @@
   </gazebo>
 
   <joint name="rear_right_corner_camera_joint" type="fixed">
-    <origin xyz="-1.0 -0.6535 1.8" rpy="0 0.785 -2.356"/>
+    <origin xyz="-1.0 -0.6535 1.75" rpy="0 0.785 -2.356"/>
     <parent link="base_link"/>
     <child link="rear_right_corner_camera_link"/>
     <axis xyz="0 0 0" />
   </joint>
-  
+    
+  <!--
+  <link name="stereo_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+
+  <joint name="gem_stereo_camera_joint" type="fixed">
+    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
+    <parent link="front_camera_link"/>
+    <child link="stereo_camera_link"/>
+  </joint>
+  -->
+
   <!-- IMU -->
   <link name="IMU_link">
-
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.1 0.1 0.1"/>
       </geometry>
     </collision>
-
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -1285,7 +1312,6 @@
       </geometry>
       <material name="red"/>
     </visual>
-
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="1"/>
@@ -1294,7 +1320,6 @@
         iyy="1.0" iyz="0.0"
         izz="1.0"/>
     </inertial>
-
   </link>
 
   <gazebo reference="IMU_link">
