@@ -20,7 +20,7 @@
 
   <xacro:include filename="$(find gem_description)/urdf/macros.xacro" />
 
-  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
+  <xacro:include filename="$(find velodyne_description)/urdf/OS1.urdf.xacro" />
 
   <link name="base_footprint">
   </link>
@@ -1088,9 +1088,9 @@
 
   <!-- *********************************************** Sensors ************************************************ -->
 
-  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/ouster/points" hz="10" samples="440" gpu="false" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
+  <xacro:OS1 parent="top_rack_link" name="ouster" topic="/ouster/points" hz="10" samples="440" gpu="false" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
     <origin xyz="0.02 0.42 0" rpy="1.5708 0 3.1416" />
-  </xacro:VLP-16>
+  </xacro:OS1>
 
   <!-- ************************* Front Camera ************************* -->
 
