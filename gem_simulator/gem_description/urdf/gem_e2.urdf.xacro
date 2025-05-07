@@ -16,7 +16,7 @@
   <xacro:property name="laser_points" value="$(arg laser_points)"/>
   
   
-  <xacro:include filename="$(find gem_description)/urdf/gem.gazebo" />
+  <xacro:include filename="$(find gem_description)/urdf/gem_e2.gazebo" />
 
   <xacro:include filename="$(find gem_description)/urdf/materials.xacro" />
 
@@ -1210,7 +1210,7 @@
 
   <!-- *********************************************** Sensors ************************************************ -->
 
-  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
+  <xacro:VLP-16 parent="top_rack_link" name="velodyne" topic="/lidar1/velodyne_points" hz="10" samples="440" gpu="false">
     <origin xyz="0.02 0.115 -0.6575" rpy="1.5708 0 3.1416" /> <!-- 1.5708 3.1416 -->
   </xacro:VLP-16>
 
