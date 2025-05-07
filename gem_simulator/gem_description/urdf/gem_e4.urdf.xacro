@@ -1088,7 +1088,7 @@
 
   <!-- *********************************************** Sensors ************************************************ -->
 
-  <xacro:OS1 parent="top_rack_link" name="ouster" topic="/ouster/points" hz="10" samples="440" gpu="false" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
+  <xacro:OS1 parent="top_rack_link" name="ouster" topic="/ouster/points" hz="10" samples="440" gpu="true" lasers="128" min_range="0.5" max_range="200.0" min_angle="-${M_PI}" max_angle="${M_PI}">
     <origin xyz="0.02 0.42 0" rpy="1.5708 0 3.1416" />
   </xacro:OS1>
 
