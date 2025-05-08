@@ -445,7 +445,7 @@
       <plugin name="front_left_corner_camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>front_left_corner_camera</cameraName>
+        <cameraName>camera_fl/arena_camera_node</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>front_left_corner_camera_link</frameName>
@@ -483,7 +483,7 @@
       <plugin name="front_right_corner_camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>front_right_corner_camera</cameraName>
+        <cameraName>camera_fr/arena_camera_node</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>front_right_corner_camera_link</frameName>
@@ -521,7 +521,7 @@
       <plugin name="rear_left_corner_camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>rear_left_corner_camera</cameraName>
+        <cameraName>camera_rl/arena_camera_node</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>rear_left_corner_camera_link</frameName>
@@ -559,7 +559,7 @@
       <plugin name="rear_right_corner_camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>rear_right_corner_camera</cameraName>
+        <cameraName>camera_rr/arena_camera_node</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>rear_right_corner_camera_link</frameName>
