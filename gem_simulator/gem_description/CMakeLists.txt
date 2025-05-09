@@ -1,10 +1,26 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
 
 project(gem_description)
 
-find_package(roslaunch)
-find_package(catkin REQUIRED)
+# Default to C99 and C++14
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
 
-catkin_package()
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(xacro REQUIRED)
+find_package(gazebo_ros REQUIRED)
 
-install(DIRECTORY launch urdf meshes DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+# Install directories
+install(DIRECTORY
+  launch
+  urdf
+  meshes
+  DESTINATION share/${PROJECT_NAME}
+)
+
+ament_package()

@@ -9,7 +9,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="verbose" default="false"/>
-  <arg name="vehicle_name" default="e2"/>
+
   <!-- Vehicle pose -->
   <arg name="x" default="0.0"/>
   <arg name="y" default="-98.0"/>
@@ -18,35 +18,48 @@
   <arg name="roll" default="0.0"/>
   <arg name="pitch" default="0.0"/>
 
-  <include file="$(find gem_description)/launch/gem_description.launch">
-    <arg name="namespace" value="$(arg namespace)"/>
-    <arg name="vehicle_name" value="$(arg vehicle_name)"/>
+  <include file="$(find-pkg-share gem_description)/launch/gem_description.launch">
+    <arg name="namespace" value="$(var namespace)"/>
   </include>
 
-  <group ns="$(arg namespace)">
+  <group>
+    <push-ros-namespace namespace="$(var namespace)"/>
 
-    <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-          args="-param robot_description -model gem_$(arg vehicle_name) -urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+    <node pkg="gazebo_ros" exec="spawn_entity.py" name="spawn_model"
+          args="-entity gem -topic robot_description -x $(var x) -y $(var y) -z $(var z) -R $(var roll) -P $(var pitch) -Y $(var yaw)"/>
 
-    <!-- Load the joint controllers. One of these publishes the joint states to joint_states. -->
-    <node name="controller_spawner" pkg="controller_manager" type="spawner"
-          args="$(find gem_gazebo)/config/gem_joint_control_params.yaml"/>
+    <!-- We do not need the ros2_control_node when using gazebo_ros2_control -->
+
+    <!-- Load controllers -->
+    <node pkg="controller_manager" exec="spawner" name="controller_spawner"
+          args="joint_state_broadcaster
+                left_steering_controller
+                right_steering_controller
+                left_front_wheel_controller
+                right_front_wheel_controller
+                left_rear_wheel_controller
+                right_rear_wheel_controller"/>
 
     <!-- Control the steering, axle joints. -->
-    <node name="ackermann_controller" pkg="gem_gazebo" type="gem_control.py">
-      <param name="cmd_timeout" value="$(arg cmd_timeout)"/>
-      <rosparam file="$(find gem_gazebo)/config/gem_ackermann_control_params.yaml" command="load"/>
+    <node pkg="gem_gazebo" exec="gem_control.py" name="ackermann_controller">
+      <param name="cmd_timeout" value="$(var cmd_timeout)"/>
+      <param from="$(find-pkg-share gem_gazebo)/config/gem_ackermann_control_params_ros2.yaml"/>
     </node>
-
-    <!-- Read joint positions from a GUI, then publish them to joint_states. -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-      <param name="rate" value="0.1"/> <!-- value is important for Rviz -->
-      <param name="use_gui" value="false"/>
-    </node>
-
-
-
 
   </group>
 
 </launch>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

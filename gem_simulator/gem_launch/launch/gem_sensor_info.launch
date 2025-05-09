@@ -2,6 +2,6 @@
 
 <launch>
 
-  <node name="gem_sensor_info" pkg="gem_gazebo" type="gem_sensor_info.py"/>
+  <node pkg="gem_gazebo" exec="gem_sensor_info.py" name="gem_sensor_info"/>
 
 </launch>

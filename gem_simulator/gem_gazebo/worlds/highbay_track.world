@@ -18,7 +18,6 @@
         <falloff>0</falloff>
       </spot>
     </light>
-
     <road name='road_0'>
       <width>3</width>
       <point>-20 1.84 0.01</point>
@@ -6229,7 +6228,7 @@
       <pose frame=''>-25.9604 -17.3175 0 0 -0 0</pose>
     </model>
     
-    <!-- <model name='Stop Sign'>
+    <model name='Stop Sign'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -6271,7 +6270,13 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>8.5636 -39.7801 0 0 -0 0</pose>
-    </model> -->
+    </model>
     
   </world>
 </sdf>
+
+
+
+
+
+
