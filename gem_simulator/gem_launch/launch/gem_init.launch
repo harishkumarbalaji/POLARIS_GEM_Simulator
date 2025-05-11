@@ -55,13 +55,17 @@
   </node>
   
   <!-- INSNavGeod Publisher Node: Combines IMU and GPS data -->
-  <node pkg="gem_gazebo" type="insnavgeod_publisher.py" name="insnavgeod"/>
+  <node pkg="gem_gazebo" type="insnavgeod_publisher.py" name="insnavgeod">
+    <param name="vehicle_name" value="gem_$(arg vehicle_name)" />
+  </node>
   
   <!-- RViz -->
   <node name="rviz" pkg="rviz" type="rviz"
     args="-d $(find gem_launch)/config_rviz/gem_$(arg vehicle_name).rviz" />
 
 
-  <node name="gem_gnss_image_node" pkg="gem_gazebo" type="gem_gnss_image.py"/>
+  <node name="gem_gnss_image_node" pkg="gem_gazebo" type="gem_gnss_image.py">
+    <param name="vehicle_name" value="gem_$(arg vehicle_name)" />
+  </node>
 
 </launch>

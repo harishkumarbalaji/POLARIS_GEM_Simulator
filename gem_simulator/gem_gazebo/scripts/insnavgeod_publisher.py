@@ -6,7 +6,6 @@ import rospy
 from sensor_msgs.msg import NavSatFix, Imu
 from std_msgs.msg import Header
 from geometry_msgs.msg import Quaternion, Vector3Stamped
-from gazebo_msgs.msg import ModelStates
 import tf.transformations
 
 from septentrio_gnss_driver.msg import INSNavGeod
@@ -22,27 +21,25 @@ class INSNavGeodPublisher(object):
         self.latest_gps = None
         self.latest_imu = None
         self.latest_gps_velocity = None
-        self.vehicle = GEM_E4 # default is to assume gem_e4
+        
+        # Get vehicle_name parameter, default to gem_e4
+        self.vehicle = rospy.get_param('~vehicle_name', GEM_E4)
+        rospy.loginfo(f"INSNavGeodPublisher: Using vehicle_name: {self.vehicle}")
+        
+        # Set publisher based on vehicle type - using INSNavGeod message for both
+        if self.vehicle == GEM_E2:
+            self.topic = GEM_E2_GNSS_TOPIC
+            rospy.loginfo(f"Publishing to {GEM_E2_GNSS_TOPIC} for gem_e2")
+        else:
+            self.topic = GEM_E4_GNSS_TOPIC
+            rospy.loginfo(f"Publishing to {GEM_E4_GNSS_TOPIC} for gem_e4")
+            
+        self.pub = rospy.Publisher(self.topic, INSNavGeod, queue_size=10)
 
         # Subscribers
-        self.model_state_sub = rospy.Subscriber("/gazebo/model_states", ModelStates, self.model_states_callback)
         self.gps_sub = rospy.Subscriber("/gps/fix", NavSatFix, self.gps_callback)
         self.imu_sub = rospy.Subscriber("/imu", Imu, self.imu_callback)
         self.gps_vel_sub = rospy.Subscriber("/gps/fix_velocity", Vector3Stamped, self.gps_vel_callback)
-
-        # Publisher (default is gem_e4 topic name)
-        self.insnavgeod_pub = rospy.Publisher(GEM_E4_GNSS_TOPIC, INSNavGeod, queue_size=10)
-
-
-    def model_states_callback(self, msg: ModelStates):
-        """Finds the current vehicle model in Gazebo and changes published topic name accordingly"""
-        if self.vehicle not in msg.name:
-            if GEM_E2 in msg.name:
-                self.vehicle = GEM_E2
-                self.insnavgeod_pub = rospy.Publisher(GEM_E2_GNSS_TOPIC, INSNavGeod, queue_size=10)
-            else:
-                self.vehicle = GEM_E4
-                self.insnavgeod_pub = rospy.Publisher(GEM_E4_GNSS_TOPIC, INSNavGeod, queue_size=10)
 
     def gps_callback(self, msg):
         """Sets latest GPS data publishes combined INSNavGeod message"""
@@ -94,7 +91,8 @@ class INSNavGeodPublisher(object):
 
         msg.ve, msg.vn, msg.vu = current_gps_velocity.vector.x, current_gps_velocity.vector.y, current_gps_velocity.vector.z
 
-        self.insnavgeod_pub.publish(msg)
+        # Publish to the appropriate topic based on vehicle type
+        self.pub.publish(msg)
 
 # Main execution
 if __name__ == '__main__':

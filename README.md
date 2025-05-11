@@ -269,7 +269,7 @@ To set the position and yaw of the E4 vehicle, run the set_pos python script in 
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
-python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+  python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
 ```
 
 will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv

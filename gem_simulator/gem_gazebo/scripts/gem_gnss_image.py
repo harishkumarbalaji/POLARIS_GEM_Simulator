@@ -57,11 +57,21 @@ class GNSSImage(object):
         self.bridge  = CvBridge()
         self.map_image_pub = rospy.Publisher("/motion_image", Image, queue_size=1) 
 
-        # Subscribe information from sensors
-        self.lat     = 0
-        self.lon     = 0
+        # Get vehicle_name parameter
+        self.vehicle_name = rospy.get_param('~vehicle_name', 'gem_e4')
+        rospy.loginfo(f"GNSSImage: Using vehicle_name: {self.vehicle_name}")
+        
+        # Subscribe to appropriate topic based on vehicle_name
+        self.lat = 0
+        self.lon = 0
         self.heading = 0
-        self.ins_sub = rospy.Subscriber("/septentrio_gnss/insnavgeod", INSNavGeod, self.ins_callback)
+        
+        if self.vehicle_name == 'gem_e2':
+            self.ins_sub = rospy.Subscriber("/novatel/inspva", INSNavGeod, self.ins_callback)
+            rospy.loginfo("Subscribed to /novatel/inspva topic for gem_e2")
+        else:
+            self.ins_sub = rospy.Subscriber("/septentrio_gnss/insnavgeod", INSNavGeod, self.ins_callback)
+            rospy.loginfo("Subscribed to /septentrio_gnss/insnavgeod topic for gem_e4")
 
         self.lat_start_bt = 40.092722  # 40.09269  
         self.lon_start_l  = -88.236365 # -88.23628
@@ -72,12 +82,10 @@ class GNSSImage(object):
         self.img_width    = 2107
         self.img_height   = 1313
 
-        
-
     def ins_callback(self, msg):
         self.heading = round(msg.heading, 1) 
-        self.lat     = msg.latitude
-        self.lon     = msg.longitude
+        self.lat = msg.latitude
+        self.lon = msg.longitude
 
     def image_heading(self, lon_x, lat_y, heading):
         
@@ -137,7 +145,7 @@ def main():
     gi = GNSSImage()
 
     try:
-    	gi.start_gi()
+        gi.start_gi()
     except KeyboardInterrupt:
         print ("Shutting down gnss image node.")
         cv2.destroyAllWindows()
