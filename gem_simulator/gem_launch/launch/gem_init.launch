@@ -60,4 +60,8 @@
   <!-- RViz -->
   <node name="rviz" pkg="rviz" type="rviz"
     args="-d $(find gem_launch)/config_rviz/gem_$(arg vehicle_name).rviz" />
+
+
+  <node name="gem_gnss_image_node" pkg="gem_gazebo" type="gem_gnss_image.py"/>
+
 </launch>

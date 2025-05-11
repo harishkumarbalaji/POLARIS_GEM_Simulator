@@ -84,7 +84,13 @@ class INSNavGeodPublisher(object):
         q = current_imu.orientation
         roll, pitch, yaw = tf.transformations.euler_from_quaternion([q.x, q.y, q.z, q.w])
         # convert to degrees
-        msg.roll, msg.pitch, msg.heading = math.degrees(roll), math.degrees(pitch), math.degrees(yaw)
+        heading = -(math.degrees(yaw)+90)
+        if heading > 180:
+            heading -= 360
+        elif heading < -180:
+            heading += 360
+        
+        msg.roll, msg.pitch, msg.heading = math.degrees(roll), math.degrees(pitch), heading
 
         msg.ve, msg.vn, msg.vu = current_gps_velocity.vector.x, current_gps_velocity.vector.y, current_gps_velocity.vector.z
 

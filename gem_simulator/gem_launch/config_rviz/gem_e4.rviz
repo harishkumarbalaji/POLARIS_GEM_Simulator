@@ -349,6 +349,18 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /motion_image
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: GNSSImage
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
     - Align Bottom: false
       Background Alpha: 0.800000011920929
       Background Color: 0; 0; 0
