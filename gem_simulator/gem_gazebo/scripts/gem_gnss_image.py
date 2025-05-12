@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 
-#================================================================
-# File name          : gem_gnss_image.py                                                                  
-# Description        : show vehicle's heading and position in an image                                                                
-# Author             : Hang Cui (hangcui3@illinois.edu)                                                                     
-# Date created       : 08/13/2022                                                                
-# Date last modified : 03/02/2024                                                            
-# Version            : 0.2                                                                    
-# Usage              : rosrun gem_gnss gem_gnss_image.py                                                                      
-# Python version     : 3.8                                                             
-#================================================================
-
 from __future__ import print_function
 
 # Python Headers

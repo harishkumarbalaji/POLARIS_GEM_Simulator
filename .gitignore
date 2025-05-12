@@ -16,3 +16,6 @@ log/
 .DS_Store
 .env
 .venv
+
+# Ignore generated data files
+**/image_info.txt

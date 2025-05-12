@@ -9,7 +9,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="verbose" default="false"/>
-  <arg name="vehicle_name" default="e2"/>
+  <arg name="vehicle_name" default="e4"/>
   <!-- Vehicle pose -->
   <arg name="x" default="0.0"/>
   <arg name="y" default="-98.0"/>
