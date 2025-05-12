@@ -9,6 +9,7 @@ from geometry_msgs.msg import Quaternion, Vector3Stamped
 import tf.transformations
 
 from septentrio_gnss_driver.msg import INSNavGeod
+from novatel_gps_msgs.msg import Inspva
 
 GEM_E2 = "gem_e2"
 GEM_E4 = "gem_e4"
@@ -26,15 +27,13 @@ class INSNavGeodPublisher(object):
         self.vehicle = rospy.get_param('~vehicle_name', GEM_E4)
         rospy.loginfo(f"INSNavGeodPublisher: Using vehicle_name: {self.vehicle}")
         
-        # Set publisher based on vehicle type - using INSNavGeod message for both
+        # Set publisher based on vehicle type
         if self.vehicle == GEM_E2:
-            self.topic = GEM_E2_GNSS_TOPIC
-            rospy.loginfo(f"Publishing to {GEM_E2_GNSS_TOPIC} for gem_e2")
+            self.pub = rospy.Publisher(GEM_E2_GNSS_TOPIC, Inspva, queue_size=10)
+            rospy.loginfo(f"Publishing Inspva to {GEM_E2_GNSS_TOPIC} for gem_e2")
         else:
-            self.topic = GEM_E4_GNSS_TOPIC
-            rospy.loginfo(f"Publishing to {GEM_E4_GNSS_TOPIC} for gem_e4")
-            
-        self.pub = rospy.Publisher(self.topic, INSNavGeod, queue_size=10)
+            self.pub = rospy.Publisher(GEM_E4_GNSS_TOPIC, INSNavGeod, queue_size=10)
+            rospy.loginfo(f"Publishing INSNavGeod to {GEM_E4_GNSS_TOPIC} for gem_e4")
 
         # Subscribers
         self.gps_sub = rospy.Subscriber("/gps/fix", NavSatFix, self.gps_callback)
@@ -42,7 +41,7 @@ class INSNavGeodPublisher(object):
         self.gps_vel_sub = rospy.Subscriber("/gps/fix_velocity", Vector3Stamped, self.gps_vel_callback)
 
     def gps_callback(self, msg):
-        """Sets latest GPS data publishes combined INSNavGeod message"""
+        """Sets latest GPS data publishes combined message"""
         self.latest_gps = msg
         self.publish_combined_data()
 
@@ -58,8 +57,7 @@ class INSNavGeodPublisher(object):
 
     def publish_combined_data(self):
         """
-        Combines the latest GPS and IMU data into an INSNavGeod message
-        and publishes it.
+        Combines the latest GPS and IMU data into appropriate message and publishes it.
         """
         current_gps = self.latest_gps
         current_imu = self.latest_imu
@@ -68,30 +66,59 @@ class INSNavGeodPublisher(object):
         if not current_gps or not current_imu or not current_gps_velocity:
             return
 
-        msg = INSNavGeod()
-        msg.header.stamp = current_gps.header.stamp
-        msg.header.frame_id = current_gps.header.frame_id
-        msg.error = current_gps.status.status
-
-        msg.latitude = current_gps.latitude
-        msg.longitude = current_gps.longitude
-        msg.height = current_gps.altitude
-
-        # convert orientation to roll, pitch, yaw
+        # Convert orientation to roll, pitch, yaw
         q = current_imu.orientation
         roll, pitch, yaw = tf.transformations.euler_from_quaternion([q.x, q.y, q.z, q.w])
-        # convert to degrees
+        # Convert to degrees
         heading = -(math.degrees(yaw)+90)
         if heading > 180:
             heading -= 360
         elif heading < -180:
             heading += 360
         
-        msg.roll, msg.pitch, msg.heading = math.degrees(roll), math.degrees(pitch), heading
+        roll_deg = math.degrees(roll)
+        pitch_deg = math.degrees(pitch)
 
-        msg.ve, msg.vn, msg.vu = current_gps_velocity.vector.x, current_gps_velocity.vector.y, current_gps_velocity.vector.z
+        if self.vehicle == GEM_E2:
+            # Create and publish Inspva message for gem_e2
+            msg = Inspva()
+            msg.header.stamp = current_gps.header.stamp
+            msg.header.frame_id = current_gps.header.frame_id
+            
+            # Status must be string (not int)
+            msg.status = str(current_gps.status.status)
 
-        # Publish to the appropriate topic based on vehicle type
+            msg.latitude = current_gps.latitude
+            msg.longitude = current_gps.longitude
+            msg.height = current_gps.altitude
+            
+            msg.roll = roll_deg
+            msg.pitch = pitch_deg
+            msg.azimuth = heading
+            
+            msg.east_velocity = current_gps_velocity.vector.x
+            msg.north_velocity = current_gps_velocity.vector.y
+            msg.up_velocity = current_gps_velocity.vector.z
+        else:
+            # Create and publish INSNavGeod message for gem_e4
+            msg = INSNavGeod()
+            msg.header.stamp = current_gps.header.stamp
+            msg.header.frame_id = current_gps.header.frame_id
+            msg.error = current_gps.status.status
+
+            msg.latitude = current_gps.latitude
+            msg.longitude = current_gps.longitude
+            msg.height = current_gps.altitude
+            
+            msg.roll = roll_deg
+            msg.pitch = pitch_deg
+            msg.heading = heading
+            
+            msg.ve = current_gps_velocity.vector.x
+            msg.vn = current_gps_velocity.vector.y
+            msg.vu = current_gps_velocity.vector.z
+
+        # Publish the message
         self.pub.publish(msg)
 
 # Main execution

@@ -67,11 +67,11 @@ class GNSSImage(object):
         self.heading = 0
         
         if self.vehicle_name == 'gem_e2':
-            self.ins_sub = rospy.Subscriber("/novatel/inspva", INSNavGeod, self.ins_callback)
-            rospy.loginfo("Subscribed to /novatel/inspva topic for gem_e2")
+            self.ins_sub = rospy.Subscriber("/novatel/inspva", Inspva, self.inspva_callback)
+            rospy.loginfo("Subscribed to /novatel/inspva topic with Inspva message for gem_e2")
         else:
             self.ins_sub = rospy.Subscriber("/septentrio_gnss/insnavgeod", INSNavGeod, self.ins_callback)
-            rospy.loginfo("Subscribed to /septentrio_gnss/insnavgeod topic for gem_e4")
+            rospy.loginfo("Subscribed to /septentrio_gnss/insnavgeod topic with INSNavGeod message for gem_e4")
 
         self.lat_start_bt = 40.092722  # 40.09269  
         self.lon_start_l  = -88.236365 # -88.23628
@@ -82,7 +82,14 @@ class GNSSImage(object):
         self.img_width    = 2107
         self.img_height   = 1313
 
+    def inspva_callback(self, msg):
+        """Callback for Inspva messages from gem_e2"""
+        self.heading = round(msg.azimuth, 1)
+        self.lat = msg.latitude
+        self.lon = msg.longitude
+
     def ins_callback(self, msg):
+        """Callback for INSNavGeod messages from gem_e4"""
         self.heading = round(msg.heading, 1) 
         self.lat = msg.latitude
         self.lon = msg.longitude
