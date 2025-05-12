@@ -275,16 +275,16 @@ python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416
 will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
 
 ## generate_waypoints.py
-To manually steer the car and periodically record waypoints to the terminal, run
+To manually steer the car and record waypoints to a csv file, run
 
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
-The controls are: W/S - forward/back | A/D - left/right | Q - quit
+The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
 
-The coordinates may need to be manually transformed to whatever frame you desire
+The Lattitude/Longitude are recorded in both start frame and global frame.
 
 
 
