@@ -4,7 +4,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
 
 | Polaris GEM e2 Vehicle                                                | Polaris GEM e4 Vehicle                                                |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| <a href="url"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="url"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
+| <a href="https://publish.illinois.edu/robotics-autonomy-resources/gem-e2/"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="https://publish.illinois.edu/robotics-autonomy-resources/gem-e4/"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
 
 ## Table of Contents
 - [Creating a Workspace](#creating-a-workspace)
