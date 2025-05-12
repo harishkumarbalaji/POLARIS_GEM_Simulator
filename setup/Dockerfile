@@ -29,6 +29,7 @@ RUN apt-get install -y \
     ros-noetic-jsk-rviz-plugins \
     ros-noetic-velodyne-simulator \
     ros-noetic-septentrio-gnss-driver \
+    ros-noetic-novatel-gps-msgs \
     && rm -rf /var/lib/apt/lists/*
 
 ARG USER

@@ -2,7 +2,7 @@
 <launch>
 
   <arg name="namespace" default="/"/>
-  <arg name="vehicle_name" default="e2"/>
+  <arg name="vehicle_name" default="e4"/>
 
   <group ns="$(arg namespace)">
 
