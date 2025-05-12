@@ -65,13 +65,34 @@
       <material name="white" />
     </visual>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+    <collision name="chassis_box">
+        <origin xyz="0 0 0.7" rpy="0 0 0"/>
+        <geometry>
+          <box size="2.6 1.3 1.4"/>
+        </geometry>
+      </collision>
+
+    <collision name="roof_rack_box">
+      <origin xyz="0 0 1.55" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://gem_description/meshes/e2/base_link.STL" />
+        <box size="1.2 1.0 0.12"/>
       </geometry>
     </collision>
 
+    <collision name="front_bumper_box">
+      <origin xyz="1.35 0 0.45" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.4 1.0 0.3"/>
+      </geometry>
+    </collision>
+
+    <collision name="rear_bumper_box">
+      <origin xyz="-1.35 0 0.45" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.4 1.0 0.3"/>
+      </geometry>
+    </collision>
+  </link>
   </link>
 
   <joint name="base_link" type="fixed">

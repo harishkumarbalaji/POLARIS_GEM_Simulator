@@ -26,33 +26,53 @@
   </link>
 
   <link name="base_link">
-    <inertial>
-      <origin xyz="-0.01178 0.0012042 0.47962" rpy="0 0 0" />
-      <mass value="1950.5" />
-      <inertia
-        ixx="546.93"
-        ixy="-0.50772"
-        ixz="-13.079"
-        iyy="1803.2"
-        iyz="0.093832"
-        izz="1702.3" />
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://gem_description/meshes/e4/base_link.STL" />
-      </geometry>
-      <material name="blue">
-        <color rgba="0 0 1 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://gem_description/meshes/e4/base_link.STL" />
-      </geometry>
-    </collision>
-  </link>
+  <inertial>
+    <origin xyz="-0.01178 0.0012042 0.47962" rpy="0 0 0"/>
+    <mass value="1950.5"/>
+    <inertia ixx="546.93" ixy="-0.50772" ixz="-13.079"
+             iyy="1803.2" iyz="0.093832" izz="1702.3"/>
+  </inertial>
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://gem_description/meshes/e4/base_link.STL"/>
+    </geometry>
+    <material name="blue">
+      <color rgba="0 0 1 1"/>
+    </material>
+  </visual>
+
+
+  <collision name="chassis_box">
+    <origin xyz="0 0 0.7" rpy="0 0 0"/>
+    <geometry>
+      <box size="2.6 1.3 1.4"/>
+    </geometry>
+  </collision>
+
+  <collision name="roof_rack_box">
+    <origin xyz="0 0 1.55" rpy="0 0 0"/>
+    <geometry>
+      <box size="1.2 1.0 0.12"/>
+    </geometry>
+  </collision>
+
+  <collision name="front_bumper_box">
+    <origin xyz="1.35 0 0.45" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.4 1.0 0.3"/>
+    </geometry>
+  </collision>
+
+  <collision name="rear_bumper_box">
+    <origin xyz="-1.35 0 0.45" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.4 1.0 0.3"/>
+    </geometry>
+  </collision>
+</link>
+
 
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
