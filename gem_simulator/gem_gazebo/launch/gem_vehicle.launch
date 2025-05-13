@@ -26,7 +26,8 @@
   <group ns="$(arg namespace)">
 
     <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-          args="-param robot_description -model gem_$(arg vehicle_name) -urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+          args="-param robot_description -model gem_$(arg vehicle_name) -urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"
+          output="screen"/>
 
     <!-- Load the joint controllers. One of these publishes the joint states to joint_states. -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
