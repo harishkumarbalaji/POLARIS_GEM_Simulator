@@ -23,6 +23,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
     - [Creating Custom YAML Configuration Files](#creating-custom-yaml-configuration-files)
     - [Example Configuration Format](#example-configuration-format)
     - [Example Usage](#example-usage)
+  - [High Bay 3D Environment](#high-bay-3d-environment)
   - [E2 Vehicle](#e2-vehicle)
     - [Track1 Environment](#track1-environment)
     - [Demo of Pure Pursuit Controller](#demo-of-pure-pursuit-controller)
@@ -200,6 +201,23 @@ roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y
 ```
 
 ![Custom Scene Highbay](./images/custom_scene_highbay.gif)
+
+### High Bay 3D Environment
+
+To use the 3D mesh model of the High Bay environment:
+
+1. **Download Resources**: Download the 3D mesh files from [this link](https://drive.google.com/file/d/1BF-EK3Bs4y98xDiH_Li8zG2p62vckI-k/view?usp=sharing)
+
+2. **Install Files**: 
+   - Extract the downloaded zip file
+   - Place the extracted `high_bay_3d` folder inside the `gem_gazebo/models` directory
+   - Make sure the folder contains the `.dae` file and associated texture files (`.png` files)
+
+3. **Launch the Environment**:
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="high_bay_3d.world" x:=17.81 y:=-10 yaw:=3.14
+```
 
 ### E2 Vehicle
 To use the E2 vehicle instead, set the parameter `vehicle_name` to `e2`:
