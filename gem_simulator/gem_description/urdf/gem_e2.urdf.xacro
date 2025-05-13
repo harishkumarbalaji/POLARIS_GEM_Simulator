@@ -65,7 +65,7 @@
       <material name="white" />
     </visual>
 
-    <collision name="base_link_collision">
+    <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://gem_description/meshes/e2/base_link.STL" />
@@ -1031,7 +1031,7 @@
       <material name="black"/>
     </visual>
     
-    <collision name="front_left_wheel_collision">
+    <collision>
     
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -1064,7 +1064,7 @@
       <material name="black" />
     </visual>
     
-    <collision name="front_right_wheel_collision">
+    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.295"/>
@@ -1095,7 +1095,7 @@
       <material name="black"/>
     </visual>
     
-    <collision name="rear_left_wheel_collision">
+    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.295"/>
@@ -1126,7 +1126,7 @@
       <material name="black"/>
     </visual>
     
-    <collision name="rear_right_wheel_collision">
+    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.295"/>
