@@ -25,7 +25,6 @@ objects:
     rpy: [-0.11, -0.12, 1.59]
 
 agents:
-  # ── animated pedestrian (actor) ──────────────────────────────────────
   - name: pedestrian1
     source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Walking%20Person"}
     trajectory:
@@ -35,9 +34,8 @@ agents:
       - [10.5, -12.5, -16.2, 0, 0, 0,  1.57]
       - [11.0, -12.5, -16.2, 0, 0, 0, -1.57]
 
-  # ── rigid bicycle that follows waypoints via /set_model_state ────────
   - name: bicycle1
-    motion: rigid                       # <── NEW: tells spawner to use rigid mode
+    motion: rigid                       #tells spawner to use rigid mode
     source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/athackst/models/bicycle"}
     trajectory:
       - [0.0,   -10.0, -15.0,  0,    0,     0,    0.0]    # start, facing “forward”
