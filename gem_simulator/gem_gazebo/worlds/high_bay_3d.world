@@ -210,7 +210,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>0 0 0 0 0 0</pose>
+      <pose frame=''>0 0 1.3 0 0 0</pose>
     </model>
 
     <!-- UI Camera settings -->
@@ -235,10 +235,10 @@
       <iterations>0</iterations>
       
       <model name='high_bay_3d'>
-        <pose frame=''>0 0 0 0 0 0</pose>
+        <pose frame=''>0 0 1.3 0 0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>0 0 0 0 0 0</pose>
+          <pose frame=''>0 0 1.3 0 0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>

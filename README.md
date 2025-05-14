@@ -68,7 +68,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -177,16 +177,19 @@ objects:
     source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: false  # Set to false to enable physics, true to keep static (default: false)
   
   - name: traffic_light
     source: {type: mesh, uri: "model://traffic_light/meshes/traffic_light.dae", scale: [0.3, 0.3, 0.3]}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
     
   - name: stop_sign
     source: {type: sdf, uri: "model://stop_sign"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
 
 # Dynamic agents section
 agents:
@@ -217,6 +220,9 @@ Both objects and agents share these common source types:
 **For static objects:**
 - Require `name`, `source`, position (`xyz`), and orientation (`rpy`) in radians
 - Only mesh files support the `scale` parameter as [scale_x, scale_y, scale_z]
+- Optional `static` parameter:
+  - `static: false` (default) - Object has physics enabled, can be moved/knocked over during simulation
+  - `static: true` - Object is fixed in place, no physics applied
 
 **For dynamic agents:**
 - `motion: rigid` - Required for vehicles/objects (not needed for pedestrians)
