@@ -67,7 +67,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -195,7 +195,6 @@ agents:
     trajectory:
       - [time, x, y, z, roll, pitch, yaw] # First waypoint
       - [time, x, y, z, roll, pitch, yaw] # Second waypoint
-      # Add more waypoints as needed
 
   # Rigid motion vehicle (kinematically moved)
   - name: bicycle1
@@ -207,22 +206,23 @@ agents:
       # Add more waypoints as needed
 ```
 
-Notes:
-- **Common Parameters**:
-  - Both objects and agents use the `source` parameter with two fields:
-    - `type`: Can be "fuel" (Gazebo Fuel model), "mesh" (direct mesh file), or "sdf" (local model)
-    - `uri`: The location of the model resource (Fuel URL, mesh file path, or model URI)
-    - `scale`: (Optional) Only applies to mesh type. Scales the mesh in [x, y, z] directions. Default is [1.0, 1.0, 1.0]
+#### Configuration Parameters
 
-- **Objects Section**:
-  - Specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
+Both objects and agents share these common source types:
+- `fuel`: Models from Gazebo Fuel (e.g., "https://fuel.gazebosim.org/...")
+- `sdf`: Complete model references (e.g., "model://stop_sign")
+- `mesh`: Direct mesh files (e.g., "model://traffic_light/meshes/traffic_light.dae")
 
-- **Agents Section**:
-  - **Pedestrians** use Gazebo's `<actor>` element with built-in animation
-  - **Other agents** (bicycles, cars, etc.) should include `motion: rigid` parameter to use kinematic movement
-  - All agents require a `trajectory` with format: `[time, x, y, z, roll, pitch, yaw]`
-  - The `time` value represents when the agent should reach that waypoint
-  - Agents will follow trajectories in a loop
+**For static objects:**
+- Require `name`, `source`, position (`xyz`), and orientation (`rpy`) in radians
+- Only mesh files support the `scale` parameter as [scale_x, scale_y, scale_z]
+
+**For dynamic agents:**
+- `motion: rigid` - Required for vehicles/objects (not needed for pedestrians)
+- Pedestrians use Gazebo's native actor animation
+- All require `trajectory` points in format: `[time, x, y, z, roll, pitch, yaw]`
+- Time values indicate when the agent should reach each waypoint
+- Trajectories loop continuously
 
 #### Example Usage
 

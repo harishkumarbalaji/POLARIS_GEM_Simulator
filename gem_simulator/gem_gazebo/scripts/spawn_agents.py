@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Spawns two kinds of agents from a YAML file:
+Spawns three kinds of agents from a YAML file:
 
 ```
 agents:
   - name: pedestrian1               # actor will have no motion param
-    source: {uri: ...}
+    source: {type: fuel, uri: ...}
     trajectory: [ [t,x,y,z,r,p,yaw], ... ]
 
   - name: bicycle1                  # rigid will have a motion param
     motion: rigid
-    source: {uri: ...}
+    source: {type: fuel, uri: ...}
+    trajectory: [ [t,x,y,z,r,p,yaw], ... ]
+    
+  - name: custom_agent              # mesh type support
+    motion: rigid
+    source: {type: mesh, uri: ..., scale: [1.0, 1.0, 1.0]}
     trajectory: [ [t,x,y,z,r,p,yaw], ... ]
 ```
 
 * **Actor** → uses Gazebo `<actor>` element (animated internally).
 * **Rigid** → dynamic include, per-link gravity disabled, moved kinematically via `/gazebo/set_model_state` in a looping trajectory.
+* **Mesh** → direct mesh file with optional scaling, moved kinematically like rigid type.
 """
 
 import sys, yaml, threading, time
@@ -47,6 +53,34 @@ def build_include_sdf(name: str, uri: str) -> str:
   <model name=\"{name}\">  
     <static>false</static>  
     <include><uri>{uri}</uri></include>  
+  </model>
+</sdf>"""
+
+
+def build_mesh_sdf(name: str, uri: str, scale=None) -> str:
+    """
+    Build SDF for a mesh type agent with optional scaling.
+    """
+    # Use default scale [1,1,1] if not provided
+    if scale is None:
+        scale = [1.0, 1.0, 1.0]
+    
+    # Make sure scale is a list of 3 floats
+    scale = list(map(float, scale[:3])) if len(scale) >= 3 else [1.0, 1.0, 1.0]
+    scale_str = f"<scale>{scale[0]} {scale[1]} {scale[2]}</scale>"
+
+    return f"""<?xml version=\"1.0\" ?>
+<sdf version=\"1.7\">  
+  <model name=\"{name}\">  
+    <static>false</static>  
+    <link name="link">
+      <visual name="visual">
+        <geometry><mesh><uri>{uri}</uri>{scale_str}</mesh></geometry>
+      </visual>
+      <collision name="collision">
+        <geometry><mesh><uri>{uri}</uri>{scale_str}</mesh></geometry>
+      </collision>
+    </link>
   </model>
 </sdf>"""
 
@@ -173,14 +207,24 @@ def main():
 
     for ag in agents:
         name   = ag["name"]
-        uri    = ag["source"]["uri"]
+        source = ag.get("source", {})
+        uri    = source.get("uri", "")
         motion = ag.get("motion", "actor")
+        s_type = source.get("type", "fuel")   # default type is fuel
+        scale  = source.get("scale", [1.0, 1.0, 1.0])  # Get scale or use default
 
         try:
             if motion == "rigid":
                 pose = to_pose(ag["trajectory"][0][1:4], ag["trajectory"][0][4:])
-                if not spawn_model(spawn_srv, name, build_include_sdf(name, uri), pose):
-                    continue
+                
+                # Use mesh SDF if type is mesh
+                if s_type.lower() == "mesh":
+                    if not spawn_model(spawn_srv, name, build_mesh_sdf(name, uri, scale), pose):
+                        continue
+                else:
+                    if not spawn_model(spawn_srv, name, build_include_sdf(name, uri), pose):
+                        continue
+                
                 disable_gravity_for_links(name)
                 start_rigid_motion(name, ag["trajectory"])
 
