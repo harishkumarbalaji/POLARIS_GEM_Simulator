@@ -341,7 +341,7 @@ cd src/POLARIS_GEM_Simulator
   python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 --vehicle gem_e4
 ```
 
-will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
+will set the vehicle in a position where the loop can be completed with the highbay_backlot_p.csv in GEMStack
 
 ## generate_waypoints.py
 To manually steer the car and record waypoints to a csv file, run
