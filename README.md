@@ -33,6 +33,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
 - [Utils Scripts](#utils-scripts)
   - [set\_pos.py](#set_pospy)
   - [generate\_waypoints.py](#generate_waypointspy)
+  - [collision_logger.py](#collision_loggerpy)
 
 ## Creating a Workspace
 
@@ -67,7 +68,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -297,6 +298,23 @@ python3 utils/generate_waypoints.py
 The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
 
 The Lattitude/Longitude are recorded in both start frame and global frame.
+
+## collision_logger.py
+To monitor and log collision events between the vehicle and other objects in the simulation, run:
+
+```bash
+source devel/setup.bash
+rosrun gem_gazebo collision_logger.py
+```
+
+The logger will:
+- Create a timestamped log file in the `logs` directory
+- Monitor collisions between vehicle parts (body, front bumper, rear bumper) and other objects
+- Display collision information in real-time, including:
+  - Collision location
+  - Contact normal
+  - Collision depth
+- Log all collision data to a file for later analysis
 
 
 
