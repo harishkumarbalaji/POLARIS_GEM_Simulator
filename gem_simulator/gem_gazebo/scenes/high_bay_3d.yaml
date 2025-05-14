@@ -1,0 +1,54 @@
+objects:
+  - name: cone_rear_left
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
+    xyz: [-17.0,  0.2, -1.32]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_rear_right
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
+    xyz: [-17.0,  4.2, -1.32]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_left
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
+    xyz: [-20.5,  0.2, -1.32]
+    rpy: [0.0, 0.0, 0.0]
+
+  - name: cone_front_right
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
+    xyz: [-20.5,  4.2, -1.32]
+    rpy: [0.0, 0.0, 0.0]
+
+  # - name: traffic_light
+  #   source: {type: sdf, uri: "model://traffic_light"}
+  #   xyz: [-25,  -0.9, -1.32]
+  #   rpy: [0.0, 0.0, 1.57]
+
+agents:
+  - name: pedestrian1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Walking%20Person"}
+    trajectory:
+      - [ 0.0, -12.5,   2.8, -1.32, 0, 0, -1.57]
+      - [ 5.0, -12.5,  -6.0, -1.32, 0, 0, -1.57]
+      - [ 5.5, -12.5,  -6.0, -1.32, 0, 0,  1.57]
+      - [10.5, -12.5,   2.8, -1.32, 0, 0,  1.57]
+      - [11.0, -12.5,   2.8, -1.32, 0, 0, -1.57]
+
+  # - name: bicycle1
+  #   motion: rigid
+  #   source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/athackst/models/bicycle"}
+  #   trajectory:
+  #     - [ 0.0, -10.0,   4.0, -1.27, 0, 0,  0.00]
+  #     - [ 6.0, -10.0,  -6.0, -1.27, 0, 0,  0.00]
+  #     - [ 7.0, -10.0,  -6.0, -1.27, 0, 0,  1.57]
+  #     - [ 8.0, -10.0,  -6.0, -1.27, 0, 0,  3.14]
+  #     - [14.0, -10.0,   4.0, -1.27, 0, 0,  3.14]
+
+  # - name: car1
+  #   motion: rigid
+  #   source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/JShep1/models/hatchback_2"}
+  #   trajectory:
+  #     - [ 0.0, -17.0,  -9.0, -1.30, 0, 0, 0.00]
+  #     - [ 4.0,   3.0,  -9.0, -1.30, 0, 0, 0.00]
+  #     - [ 4.5,   3.0,  -9.0, -1.30, 0, 0, 3.14]
+  #     - [ 8.5, -17.0,  -9.0, -1.30, 0, 0, 3.14]
