@@ -7,49 +7,94 @@ import os
 
 class CollisionLogger:
     def __init__(self):
+        # Initialize the ROS node
+        rospy.init_node('collision_logger', anonymous=True)
+        
         # Create logs directory if it doesn't exist
-        self.logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
+        self.logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'logs')
         os.makedirs(self.logs_dir, exist_ok=True)
         
         # Create log file with timestamp
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.log_file = os.path.join(self.logs_dir, f'collision_log_{timestamp}.txt')
         
-        # Initialize ROS node
-        rospy.init_node('collision_logger', anonymous=True)
-        
-        # Subscribe to contact sensor topic
+        # Subscribe to the contact sensor topic
         rospy.Subscriber('/contact_sensor', ContactsState, self.contact_callback)
         
-        rospy.loginfo(f"Collision logger initialized. Logging to: {self.log_file}")
-        
+        rospy.loginfo("[Info] Collision logger initialized. Logging to: %s", self.log_file)
+        rospy.loginfo("[Info] Waiting for collision events...")
+
+    def simplify_collision_name(self, name):
+        """Simplify collision names to be more readable"""
+        if "base_link" in name:
+            return "vehicle body"
+        elif "front_rack" in name:
+            return "vehicle front-rack"
+        elif "rear_rack" in name:
+            return "vehicle rear-rack"
+        elif "::" in name:
+            # For other objects, just return the first part
+            return name.split("::")[0]
+        return name
+
     def contact_callback(self, msg):
-        """Callback function for contact sensor messages"""
-        if msg.states:  # If there are any contacts
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-            for contact in msg.states:
-                # Log collision information
-                collision_info = (
-                    f"Time: {timestamp}\n"
-                    f"Collision between: {contact.collision1_name} and {contact.collision2_name}\n"
-                    f"Contact position: x={contact.contact_positions[0].x:.3f}, "
-                    f"y={contact.contact_positions[0].y:.3f}, "
-                    f"z={contact.contact_positions[0].z:.3f}\n"
-                    f"Contact normal: x={contact.contact_normals[0].x:.3f}, "
-                    f"y={contact.contact_normals[0].y:.3f}, "
-                    f"z={contact.contact_normals[0].z:.3f}\n"
-                    f"Contact depth: {contact.depths[0]:.3f}\n"
-                    f"{'='*50}\n"
-                )
+        if not msg.states:  # If no contacts
+            return
+            
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        
+        # Create a dictionary to store unique collisions
+        unique_collisions = {}
+        
+        # Process all collision states
+        for state in msg.states:
+            # Create a unique key for this collision pair
+            collision_key = tuple(sorted([state.collision1_name, state.collision2_name]))
+            
+            # If this collision pair hasn't been seen before, or if this collision has a greater depth
+            if collision_key not in unique_collisions or state.depths[0] > unique_collisions[collision_key].depths[0]:
+                unique_collisions[collision_key] = state
+        
+        # Print to terminal
+        rospy.loginfo("\n=== Collision Detected at %s ===", timestamp)
+        
+        with open(self.log_file, 'a') as f:
+            f.write(f"\n=== Collision Detected at {timestamp} ===\n")
+            
+            for i, (collision_key, state) in enumerate(unique_collisions.items(), 1):
+                # Simplify collision names
+                collision1 = self.simplify_collision_name(state.collision1_name)
+                collision2 = self.simplify_collision_name(state.collision2_name)
                 
-                # Write to log file
-                with open(self.log_file, 'a') as f:
-                    f.write(collision_info)
+                # Print to terminal
+                rospy.loginfo("\nContact %d:", i)
+                rospy.loginfo("Collision between: %s and %s", collision1, collision2)
                 
-                rospy.loginfo(f"Collision detected and logged: {contact.collision1_name} - {contact.collision2_name}")
+                # Combine position coordinates into one line
+                pos = state.contact_positions[0]
+                pos_str = f"Contact Position: x={pos.x:.3f}, y={pos.y:.3f}, z={pos.z:.3f}"
+                rospy.loginfo(pos_str)
+                
+                # Combine normal coordinates into one line
+                normal = state.contact_normals[0]
+                normal_str = f"Contact Normal: x={normal.x:.3f}, y={normal.y:.3f}, z={normal.z:.3f}"
+                rospy.loginfo(normal_str)
+                
+                depth_str = f"Contact Depth: {state.depths[0]:.3f}"
+                rospy.loginfo(depth_str)
+                
+                # Write to file
+                f.write(f"\nContact {i}:\n")
+                f.write(f"Collision between: {collision1} and {collision2}\n")
+                f.write(f"{pos_str}\n")
+                f.write(f"{normal_str}\n")
+                f.write(f"{depth_str}\n")
+                f.write("-" * 50 + "\n")
+            
+            f.write("\n")
+            rospy.loginfo("-" * 50)
 
     def run(self):
-        """Run the node"""
         rospy.spin()
 
 if __name__ == '__main__':
