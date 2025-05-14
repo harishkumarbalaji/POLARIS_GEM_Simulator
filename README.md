@@ -338,10 +338,10 @@ To set the position and yaw of the vehicle, run the set_pos python script in the
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
-  python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+  python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 --vehicle gem_e4
 ```
 
-will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
+will set the vehicle in a position where the loop can be completed with the highbay_backlot_p.csv in GEMStack
 
 ## generate_waypoints.py
 To manually steer the car and record waypoints to a csv file, run
@@ -351,6 +351,7 @@ source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
-The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
+The controls are: W/S - forward/back | A/D - left/right | R - start/stop waypoint recording | Q - quit
 
-The Lattitude/Longitude are recorded in both start frame and global frame.
+Yaypoints are recorded to a utils/waypoints/waypoints.csv directory.
+The lattitude, longitude, and heading are recorded in start frame so that it can be used directly in gemstack
