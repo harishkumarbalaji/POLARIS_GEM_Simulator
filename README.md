@@ -68,7 +68,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -152,7 +152,7 @@ roslaunch gem_launch gem_init.launch world_name:=parking.world x:=-9.4 y:=-5.7 y
 
 ### Custom Scene
 
-The simulator supports custom scenes with dynamic placement of cones and pedestrians using YAML configuration files.
+The simulator supports custom scenes with static objects (cones, signs, etc.) and dynamic agents (pedestrians, bicycles, cars) using YAML configuration files.
 
 #### Using Custom Scene Feature
 
@@ -162,35 +162,74 @@ This will automatically load the corresponding YAML configuration file (e.g., `h
 
 #### Creating Custom YAML Configuration Files
 
-The YAML configuration file should specify the positions of cones and trajectories of pedestrians. The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
+The YAML configuration file consists of two main sections:
+1. `objects`: Static items placed in the scene (cones, signs, etc.)
+2. `agents`: Dynamic entities that can move (pedestrians, vehicles, etc.)
+
+The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
 
 #### Example Configuration Format:
 
 ```yaml
-model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
-
-cones:
+# Static objects section
+objects:
   - name: cone1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: false  # Set to false to enable physics, true to keep static (default: false)
   
-  - name: cone2
+  - name: traffic_light
+    source: {type: mesh, uri: "model://traffic_light/meshes/traffic_light.dae", scale: [0.3, 0.3, 0.3]}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
+    
+  - name: stop_sign
+    source: {type: sdf, uri: "model://stop_sign"}
+    xyz: [x, y, z]
+    rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
 
-pedestrians:
+# Dynamic agents section
+agents:
+  # Animated pedestrian (uses Gazebo actor with animation)
   - name: pedestrian1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Walking%20Person"}
+    trajectory:
+      - [time, x, y, z, roll, pitch, yaw] # First waypoint
+      - [time, x, y, z, roll, pitch, yaw] # Second waypoint
+
+  # Rigid motion vehicle (kinematically moved)
+  - name: bicycle1
+    motion: rigid
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/athackst/models/bicycle"}
     trajectory:
       - [time, x, y, z, roll, pitch, yaw] # First waypoint
       - [time, x, y, z, roll, pitch, yaw] # Second waypoint
       # Add more waypoints as needed
 ```
 
-Notes:
-- For cones, specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
-- For pedestrians, define a trajectory as a series of waypoints with format: `[time, x, y, z, roll, pitch, yaw]`.
-- The `time` value in pedestrian trajectories represents when the pedestrian should reach that waypoint.
-- Pedestrians will follow the trajectory and loop if configured in the YAML file.
+#### Configuration Parameters
+
+Both objects and agents share these common source types:
+- `fuel`: Models from Gazebo Fuel (e.g., "https://fuel.gazebosim.org/...")
+- `sdf`: Complete model references (e.g., "model://stop_sign")
+- `mesh`: Direct mesh files (e.g., "model://traffic_light/meshes/traffic_light.dae")
+
+**For static objects:**
+- Require `name`, `source`, position (`xyz`), and orientation (`rpy`) in radians
+- Only mesh files support the `scale` parameter as [scale_x, scale_y, scale_z]
+- Optional `static` parameter:
+  - `static: false` (default) - Object has physics enabled, can be moved/knocked over during simulation
+  - `static: true` - Object is fixed in place, no physics applied
+
+**For dynamic agents:**
+- `motion: rigid` - Required for vehicles/objects (not needed for pedestrians)
+- Pedestrians use Gazebo's native actor animation
+- All require `trajectory` points in format: `[time, x, y, z, roll, pitch, yaw]`
+- Time values indicate when the agent should reach each waypoint
+- Trajectories loop continuously
 
 #### Example Usage
 
@@ -315,8 +354,3 @@ python3 utils/generate_waypoints.py
 The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
 
 The Lattitude/Longitude are recorded in both start frame and global frame.
-
-
-
-
-
