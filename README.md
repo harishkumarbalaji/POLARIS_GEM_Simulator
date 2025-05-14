@@ -23,6 +23,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
     - [Creating Custom YAML Configuration Files](#creating-custom-yaml-configuration-files)
     - [Example Configuration Format](#example-configuration-format)
     - [Example Usage](#example-usage)
+  - [High Bay 3D Environment](#high-bay-3d-environment)
   - [E2 Vehicle](#e2-vehicle)
     - [Track1 Environment](#track1-environment)
     - [Demo of Pure Pursuit Controller](#demo-of-pure-pursuit-controller)
@@ -68,7 +69,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -152,7 +153,7 @@ roslaunch gem_launch gem_init.launch world_name:=parking.world x:=-9.4 y:=-5.7 y
 
 ### Custom Scene
 
-The simulator supports custom scenes with dynamic placement of cones and pedestrians using YAML configuration files.
+The simulator supports custom scenes with static objects (cones, signs, etc.) and dynamic agents (pedestrians, bicycles, cars) using YAML configuration files.
 
 #### Using Custom Scene Feature
 
@@ -162,35 +163,74 @@ This will automatically load the corresponding YAML configuration file (e.g., `h
 
 #### Creating Custom YAML Configuration Files
 
-The YAML configuration file should specify the positions of cones and trajectories of pedestrians. The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
+The YAML configuration file consists of two main sections:
+1. `objects`: Static items placed in the scene (cones, signs, etc.)
+2. `agents`: Dynamic entities that can move (pedestrians, vehicles, etc.)
+
+The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
 
 #### Example Configuration Format:
 
 ```yaml
-model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
-
-cones:
+# Static objects section
+objects:
   - name: cone1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: false  # Set to false to enable physics, true to keep static (default: false)
   
-  - name: cone2
+  - name: traffic_light
+    source: {type: mesh, uri: "model://traffic_light/meshes/traffic_light.dae", scale: [0.3, 0.3, 0.3]}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
+    
+  - name: stop_sign
+    source: {type: sdf, uri: "model://stop_sign"}
+    xyz: [x, y, z]
+    rpy: [roll, pitch, yaw]
+    static: true  # Keep this object fixed in place
 
-pedestrians:
+# Dynamic agents section
+agents:
+  # Animated pedestrian (uses Gazebo actor with animation)
   - name: pedestrian1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Walking%20Person"}
+    trajectory:
+      - [time, x, y, z, roll, pitch, yaw] # First waypoint
+      - [time, x, y, z, roll, pitch, yaw] # Second waypoint
+
+  # Rigid motion vehicle (kinematically moved)
+  - name: bicycle1
+    motion: rigid
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/athackst/models/bicycle"}
     trajectory:
       - [time, x, y, z, roll, pitch, yaw] # First waypoint
       - [time, x, y, z, roll, pitch, yaw] # Second waypoint
       # Add more waypoints as needed
 ```
 
-Notes:
-- For cones, specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
-- For pedestrians, define a trajectory as a series of waypoints with format: `[time, x, y, z, roll, pitch, yaw]`.
-- The `time` value in pedestrian trajectories represents when the pedestrian should reach that waypoint.
-- Pedestrians will follow the trajectory and loop if configured in the YAML file.
+#### Configuration Parameters
+
+Both objects and agents share these common source types:
+- `fuel`: Models from Gazebo Fuel - https://app.gazebosim.org/
+- `sdf`: Complete model references (e.g., "model://stop_sign")
+- `mesh`: Direct mesh files (e.g., "model://traffic_light/meshes/traffic_light.dae")
+
+**For static objects:**
+- Require `name`, `source`, position (`xyz`), and orientation (`rpy`) in radians
+- Only mesh files support the `scale` parameter as [scale_x, scale_y, scale_z]
+- Optional `static` parameter:
+  - `static: false` (default) - Object has physics enabled, can be moved/knocked over during simulation
+  - `static: true` - Object is fixed in place, no physics applied
+
+**For dynamic agents:**
+- `motion: rigid` - Required for vehicles/objects (not needed for pedestrians)
+- Pedestrians use Gazebo's native actor animation
+- All require `trajectory` points in format: `[time, x, y, z, roll, pitch, yaw]`
+- Time values indicate when the agent should reach each waypoint
+- Trajectories loop continuously
 
 #### Example Usage
 
@@ -201,6 +241,23 @@ roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y
 ```
 
 ![Custom Scene Highbay](./images/custom_scene_highbay.gif)
+
+### High Bay 3D Environment
+
+To use the 3D mesh model of the High Bay environment:
+
+1. **Download Resources**: Download the 3D mesh files from [this link](https://drive.google.com/file/d/1BF-EK3Bs4y98xDiH_Li8zG2p62vckI-k/view?usp=sharing)
+
+2. **Install Files**: 
+   - Extract the downloaded zip file
+   - Place the extracted `high_bay_3d` folder inside the `gem_gazebo/models` directory
+   - Make sure the folder contains the `.dae` file and associated texture files (`.png` files)
+
+3. **Launch the Environment**:
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="high_bay_3d.world" x:=17.81 y:=-10 yaw:=3.14
+```
 
 ### E2 Vehicle
 To use the E2 vehicle instead, set the parameter `vehicle_name` to `e2`:
@@ -282,10 +339,10 @@ To set the position and yaw of the vehicle, run the set_pos python script in the
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
-  python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416
 ```
 
-will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
+It will automatically detect the vehicle model and set the position.
 
 ## generate_waypoints.py
 To manually steer the car and record waypoints to a csv file, run
@@ -295,9 +352,10 @@ source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
-The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
+The controls are: W/S - forward/back | A/D - left/right | R - start/stop waypoint recording | Q - quit
 
-The Lattitude/Longitude are recorded in both start frame and global frame.
+Waypoints are recorded to a utils/waypoints/waypoints.csv directory.
+The lattitude, longitude, and heading are recorded in start frame.
 
 ## collision_logger.py
 To monitor and log collision events between the vehicle and other objects in the simulation, run:
@@ -315,8 +373,3 @@ The logger will:
   - Contact normal
   - Collision depth
 - Log all collision data to a file for later analysis
-
-
-
-
-
