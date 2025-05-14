@@ -20,7 +20,7 @@ objects:
     rpy: [0.0, 0.0, 0.0]
 
   - name: traffic_light
-    source: {type: sdf, uri: "model://traffic_light"}      # local STL wrapped in model.sdf
+    source: {type: sdf, uri: "model://traffic_light"}      # local dae 3d file rapped in model.sdf
     xyz: [-15.4, -18.3, 0.0]
     rpy: [0.0, 0.0, 1.57]
 

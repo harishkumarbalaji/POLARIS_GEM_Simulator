@@ -1,25 +1,30 @@
-model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
-
-cones:
-
+# Static objects placed in the scene (no movement)
+objects:
   - name: cone_rear_left
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [3.8378, -17.75 , 0]
     rpy: [0.0, 0.0, 0.0]
 
   - name: cone_rear_right
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [8.326, -17.75, 0.1]
     rpy: [0.0, 0.0, 0.0]
 
   - name: cone_front_left
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [3.8378 ,-13.376, 0]
     rpy: [0.0, 0.0, 0.0]
 
   - name: cone_front_right
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"}
     xyz: [8.326, -13.376, 0]
     rpy: [0.0, 0.0, 0.0]
 
-pedestrians:
+# Dynamic agents that move along trajectories
+agents:
+  # Pedestrian uses Gazebo's built-in actor animation (walks naturally)
   - name: pedestrian1
+    source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Walking%20Person"}
     trajectory:
       - [0.0 , -12.5, -16.2, 0, 0, 0, -1.57] # time,x,y,z,r,p,y
       - [5.0 , -12.5, -25.0, 0, 0, 0, -1.57]
