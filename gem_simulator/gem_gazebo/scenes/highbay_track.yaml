@@ -19,10 +19,10 @@ objects:
     xyz: [-20.5, -14.8, 0.0]
     rpy: [0.0, 0.0, 0.0]
 
-  - name: stop_sign
-    source: {type: sdf, uri: "model://stop_sign"}      # local STL wrapped in model.sdf
+  - name: traffic_light
+    source: {type: sdf, uri: "model://traffic_light"}      # local STL wrapped in model.sdf
     xyz: [-15.4, -18.3, 0.0]
-    rpy: [-0.11, -0.12, 1.59]
+    rpy: [0.0, 0.0, 1.57]
 
 agents:
   - name: pedestrian1

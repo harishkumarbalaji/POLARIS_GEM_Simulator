@@ -7,8 +7,7 @@
   <arg name="debug" default="false" />
   <arg name="world_name" default="example.world" />
   <arg name="vehicle_name" default="e4" />
-  <arg name="scene_name" default="$(eval arg('world_name').split('.world')[0])" />
-  <arg name="custom_scene" default="false" />
+
   <!-- Define a condition for highbay world -->
   <arg name="is_highbay" default="$(eval arg('world_name') == 'highbay_track.world')" />
   <!-- Define RViz config suffix based on world -->
@@ -17,12 +16,6 @@
   <arg name="velodyne_points" default="false" />
   <!-- Select appropriate RViz config -->
   <arg name="rviz_config" default="$(eval 'gem_velodyne' if arg('velodyne_points') else 'gem_' + arg('vehicle_name') + arg('rviz_suffix'))" />
-
-  <!-- Vehicle & scene parameters -->
-  <arg name="vehicle_name"  default="e2"/>
-  <arg name="x"             default="0"/>
-  <arg name="y"             default="0"/>
-  <arg name="yaw"           default="0.0"/>
 
   <!-- Custom scene toggle -->
   <arg name="custom_scene"  default="false"/>
