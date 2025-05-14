@@ -15,7 +15,7 @@ objects:
     rpy: [roll, pitch, yaw]
 
   - name: stop_sign
-    source: {type: mesh, uri: "model://stop_sign/meshes/Stop_Sign.stl"}
+    source: {type: mesh, uri: "model://stop_sign/meshes/Stop_Sign.stl", scale: [1.0, 1.0, 1.0]}
     xyz: [...]
     rpy: [...]
 """
@@ -29,13 +29,21 @@ from typing import List
 
 
 # ─────────────────────────── helper function ────────────────────────────
-def build_sdf(name: str, src_type: str, uri: str, static: bool = True) -> str:
+def build_sdf(name: str, src_type: str, uri: str, scale=None, static: bool = True) -> str:
     """
     Return an SDF <model> string based on the asset source:
       • mesh  -> inlines the STL/DAE
       • anything else (sdf / urdf / fuel) -> <include><uri>...
     """
     src_type = (src_type or "").lower()
+    
+    # Use default scale [1,1,1] if not provided
+    if scale is None:
+        scale = [1.0, 1.0, 1.0]
+    
+    # Make sure scale is a list of 3 floats
+    scale = list(map(float, scale[:3])) if len(scale) >= 3 else [1.0, 1.0, 1.0]
+    scale_str = f"<scale>{scale[0]} {scale[1]} {scale[2]}</scale>"
 
     if src_type == "mesh":
         return f"""<?xml version="1.0" ?>
@@ -44,10 +52,10 @@ def build_sdf(name: str, src_type: str, uri: str, static: bool = True) -> str:
     <static>{str(static).lower()}</static>
     <link name="link">
       <visual name="visual">
-        <geometry><mesh><uri>{uri}</uri></mesh></geometry>
+        <geometry><mesh><uri>{uri}</uri>{scale_str}</mesh></geometry>
       </visual>
       <collision name="collision">
-        <geometry><mesh><uri>{uri}</uri></mesh></geometry>
+        <geometry><mesh><uri>{uri}</uri>{scale_str}</mesh></geometry>
       </collision>
     </link>
   </model>
@@ -108,12 +116,13 @@ def main() -> None:
         source = obj.get("source", {})
         s_type = source.get("type", "sdf")   # default to include
         uri    = source.get("uri", "")
+        scale  = source.get("scale", [1.0, 1.0, 1.0])  # Get scale or use default
 
         if not name or not uri:
             rospy.logwarn("Skipping invalid object entry: %s", obj)
             continue
 
-        sdf_xml = build_sdf(name, s_type, uri, static=True)
+        sdf_xml = build_sdf(name, s_type, uri, scale, static=True)
         pose    = to_pose(xyz, rpy)
 
         try:

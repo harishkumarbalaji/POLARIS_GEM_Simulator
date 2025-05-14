@@ -20,8 +20,13 @@ objects:
     rpy: [0.0, 0.0, 0.0]
 
   - name: traffic_light
-    source: {type: sdf, uri: "model://traffic_light"}      # local dae 3d file rapped in model.sdf
-    xyz: [-15.4, -18.3, 0.0]
+    source: {type: mesh, uri: "model://traffic_light/meshes/traffic_light.dae", scale: [0.03, 0.03, 0.03]}  # Example of using mesh file directly with scale
+    xyz: [-34.96, -19.43, 0.0]
+    rpy: [0.0, 0.0, 1.57]
+    
+  - name: stop_sign
+    source: {type: sdf, uri: "model://stop_sign"}  # Use the full SDF model
+    xyz: [-26.8, -19.2, 0.0]
     rpy: [0.0, 0.0, 1.57]
 
 agents:
@@ -38,7 +43,7 @@ agents:
     motion: rigid                       #tells spawner to use rigid mode
     source: {type: fuel, uri: "https://fuel.gazebosim.org/1.0/athackst/models/bicycle"}
     trajectory:
-      - [0.0,   -10.0, -15.0,  0,    0,     0,    0.0]    # start, facing “forward”
+      - [0.0,   -10.0, -15.0,  0,    0,     0,    0.0]    # start, facing "forward"
       - [6.0,   -10.0, -25.0,  0,    0,     0,    0.0]    # drive straight down
       - [7.0,   -10.0, -25.0,  0,    0,     0,    1.57]   # halfway turn (90°)
       - [8.0,   -10.0, -25.0,  0,    0,     0,    3.14]   # complete turn (180°)
@@ -52,4 +57,4 @@ agents:
       - [0.0,   -17.0, -28.0, 0.1,   0,     0,    0.0]    
       - [4.0,     3.0, -28.0, 0.1,   0,     0,    0.0]    
       - [4.5,     3.0, -28.0, 0.1,   0,     0,    3.14]   
-      - [8.5,   -17.0, -28.0, 0.1,   0,     0,    3.14] 
+      - [8.5,   -17.0, -28.0, 0.1,   0,     0,    3.14]
