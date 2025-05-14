@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="traffic_light">
+    <static>true</static>
+    <link name="traffic_light_link">
+      <visual name="traffic_light_visual">
+        <geometry>
+          <mesh>
+            <uri>model://traffic_light/meshes/traffic_light.dae</uri>
+            <scale>0.03 0.03 0.03</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="traffic_light_collision">
+        <geometry>
+          <mesh>
+            <uri>model://traffic_light/meshes/traffic_light.dae</uri>
+            <scale>0.03 0.03 0.03</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
