@@ -213,7 +213,7 @@ agents:
 #### Configuration Parameters
 
 Both objects and agents share these common source types:
-- `fuel`: Models from Gazebo Fuel (e.g., "https://fuel.gazebosim.org/...")
+- `fuel`: Models from Gazebo Fuel - https://app.gazebosim.org/
 - `sdf`: Complete model references (e.g., "model://stop_sign")
 - `mesh`: Direct mesh files (e.g., "model://traffic_light/meshes/traffic_light.dae")
 
