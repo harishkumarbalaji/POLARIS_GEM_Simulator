@@ -19,3 +19,6 @@ log/
 
 # Ignore generated data files
 **/image_info.txt
+
+# Ignore high bay 3d model
+gem_simulator/gem_gazebo/models/high_bay_3d/

@@ -13,11 +13,13 @@ objects:
     source: {type: fuel, uri: "https://fuel.gazebosim.org/.../Construction%20Cone"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
+    static: false  # Optional, defaults to false
 
   - name: stop_sign
     source: {type: mesh, uri: "model://stop_sign/meshes/Stop_Sign.stl", scale: [1.0, 1.0, 1.0]}
     xyz: [...]
     rpy: [...]
+    static: true  # Set to true to disable physics
 """
 import sys
 import yaml
@@ -107,7 +109,7 @@ def main() -> None:
 
     rospy.wait_for_service("/gazebo/spawn_sdf_model")
     spawn_srv = rospy.ServiceProxy("/gazebo/spawn_sdf_model", SpawnModel)
-    rospy.loginfo("Spawning %d static objects …", len(objects))
+    rospy.loginfo("Spawning %d objects …", len(objects))
 
     for obj in objects:
         name   = obj.get("name")
@@ -117,18 +119,20 @@ def main() -> None:
         s_type = source.get("type", "sdf")   # default to include
         uri    = source.get("uri", "")
         scale  = source.get("scale", [1.0, 1.0, 1.0])  # Get scale or use default
+        static = obj.get("static", False)     # Default to physics enabled if not specified
 
         if not name or not uri:
             rospy.logwarn("Skipping invalid object entry: %s", obj)
             continue
 
-        sdf_xml = build_sdf(name, s_type, uri, scale, static=True)
+        sdf_xml = build_sdf(name, s_type, uri, scale, static=static)
         pose    = to_pose(xyz, rpy)
 
         try:
             resp = spawn_srv(name, sdf_xml, "/", pose, "world")
             if resp.success:
-                rospy.loginfo("Spawned object '%s'", name)
+                status = "static" if static else "with physics enabled"
+                rospy.loginfo(f"Spawned object '{name}' {status}")
             else:
                 rospy.logwarn("Failed to spawn '%s': %s",
                               name, resp.status_message)
