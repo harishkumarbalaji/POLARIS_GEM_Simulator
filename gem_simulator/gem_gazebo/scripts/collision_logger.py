@@ -29,9 +29,9 @@ class CollisionLogger:
         if "base_link" in name:
             return "vehicle body"
         elif "front_rack" in name:
-            return "vehicle front-rack"
+            return "vehicle front bumper"
         elif "rear_rack" in name:
-            return "vehicle rear-rack"
+            return "vehicle rear bumper"
         elif "::" in name:
             # For other objects, just return the first part
             return name.split("::")[0]
@@ -65,6 +65,10 @@ class CollisionLogger:
                 # Simplify collision names
                 collision1 = self.simplify_collision_name(state.collision1_name)
                 collision2 = self.simplify_collision_name(state.collision2_name)
+                
+                # Reorder collisions to put vehicle parts first
+                if "vehicle" in collision2:
+                    collision1, collision2 = collision2, collision1
                 
                 # Print to terminal
                 rospy.loginfo("\nContact %d:", i)
