@@ -327,3 +327,6 @@ source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
+The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
+
+The Lattitude/Longitude are recorded in both start frame and global frame.
