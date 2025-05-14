@@ -4,7 +4,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
 
 | Polaris GEM e2 Vehicle                                                | Polaris GEM e4 Vehicle                                                |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| <a href="url"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="url"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
+| <a href="https://publish.illinois.edu/robotics-autonomy-resources/gem-e2/"><img src="./images/Polaris_GEM_e2.png" width="300"></a> | <a href="https://publish.illinois.edu/robotics-autonomy-resources/gem-e4/"><img src="./images/Polaris_GEM_e4.png" width="300"></a> |
 
 ## Table of Contents
 - [Creating a Workspace](#creating-a-workspace)
@@ -16,18 +16,20 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
   - [Stopping the Docker container](#stopping-the-docker-container)
 - [Building the Simulator and its packages](#building-the-simulator-and-its-packages)
 - [Running the Simulator](#running-the-simulator)
-  - [Track1 Environment](#track1-environment)
+- [Vehicle Selection](#vehicle-selection)
+  - [E4 Vehicle (Default)](#e4-vehicle-default)
+  - [Custom Scene](#custom-scene)
+    - [Using Custom Scene Feature](#using-custom-scene-feature)
+    - [Creating Custom YAML Configuration Files](#creating-custom-yaml-configuration-files)
+    - [Example Configuration Format](#example-configuration-format)
+    - [Example Usage](#example-usage)
+  - [E2 Vehicle](#e2-vehicle)
+    - [Track1 Environment](#track1-environment)
     - [Demo of Pure Pursuit Controller](#demo-of-pure-pursuit-controller)
     - [Demo of Stanley Controller](#demo-of-stanley-controller)
-  - [Track2 Environment](#track2-environment)
-  - [Example Environment](#example-environment)
-  - [Highbay Environment](#highbay-environment)
-  - [E4 Vehicle in Parking world](#e4-vehicle-in-parking-world)
-- [Custom Scene](#custom-scene)
-  - [Using Custom Scene Feature](#using-custom-scene-feature)
-  - [Creating Custom YAML Configuration Files](#creating-custom-yaml-configuration-files)
-    - [Example Configuration Format](#example-configuration-format)
-  - [Example Usage](#example-usage)
+    - [Track2 Environment](#track2-environment)
+    - [Example Environment](#example-environment)
+    - [Highbay Environment](#highbay-environment)
 - [Utils Scripts](#utils-scripts)
   - [set\_pos.py](#set_pospy)
   - [generate\_waypoints.py](#generate_waypointspy)
@@ -132,99 +134,36 @@ catkin_make
 ```
 
 ## Running the Simulator
-#### Track1 Environment
+
+The simulator supports both Polaris GEM e4 (default) and GEM e2 vehicles. You can select which vehicle to use when launching the simulator.
+
+## Vehicle Selection
+
+### E4 Vehicle (Default)
+The simulator now uses the E4 vehicle by default. To run with the default E4 vehicle in the parking world:
 
 ```bash
 source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="track1.world"
-```
-
-```bash
-source devel/setup.bash
-roslaunch gem_launch gem_sensor_info.launch
-```
-
-<a href="url"><img src="./images/simple_track_rviz.png" width="600"></a>
-
-<a href="url"><img src="./images/simple_track_gazebo.png" width="600"></a>
-
-##### Demo of Pure Pursuit Controller
-
-```bash
-source devel/setup.bash
-rosrun gem_pure_pursuit_sim pure_pursuit_sim.py
-```
-
-<a href="url"><img src="./images/pp_controller.gif" width="600"></a>
-
-##### Demo of Stanley Controller
-
-```bash
-source devel/setup.bash
-rosrun gem_stanley_sim stanley_sim.py
-```
-
-<a href="url"><img src="./images/stanley_controller_rviz.gif" width="600"></a>
-
-<a href="url"><img src="./images/stanley_controller_gazebo.gif" width="600"></a>
-
-### Track2 Environment
-
-```bash
-source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="track2.world" y:=-98.5
-```
-
-<a href="url"><img src="./images/track2_gazebo.png" width="600"></a>
-
-### Example Environment
-
-```bash
-source devel/setup.bash
-roslaunch gem_launch gem_init.launch
-```
-
-<a href="url"><img src="./images/example_rviz.png" width="600"></a>
-
-<a href="url"><img src="./images/example_gazebo.png" width="600"></a>
-
-### Highbay Environment
-
-```bash
-source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416
-```
-
-<a href="url"><img src="./images/highbay_rviz.png" width="600"></a>
-
-<a href="url"><img src="./images/highbay_gazebo.png" width="600"></a>
-
-### E4 Vehicle in Parking world
-
-Set the parameter `vehicle_name` to `e4` in the `gem_init.launch` file to use the E4 vehicle. By default, the vehicle name is `e2`.
-
-```bash
-source devel/setup.bash
-roslaunch gem_launch gem_init.launch   world_name:=parking.world   vehicle_name:=e4   x:=-9.4   y:=-5.7   yaw:=220
+roslaunch gem_launch gem_init.launch world_name:=parking.world x:=-9.4 y:=-5.7 yaw:=220
 ```
 
 <a href="url"><img src="./images/e4parking.jpeg" width="600"></a>
 
-# Custom Scene
+### Custom Scene
 
 The simulator supports custom scenes with dynamic placement of cones and pedestrians using YAML configuration files.
 
-## Using Custom Scene Feature
+#### Using Custom Scene Feature
 
 To enable the custom scene feature, set the `custom_scene` parameter to `true` when launching the simulator.
 
 This will automatically load the corresponding YAML configuration file (e.g., `highbay_track.yaml`) from the `gem_gazebo/scenes/` directory.
 
-## Creating Custom YAML Configuration Files
+#### Creating Custom YAML Configuration Files
 
 The YAML configuration file should specify the positions of cones and trajectories of pedestrians. The file should be placed in the `gem_gazebo/scenes/` directory with the same base name as your world file.
 
-### Example Configuration Format:
+#### Example Configuration Format:
 
 ```yaml
 model_uri: "https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction%20Cone"
@@ -246,45 +185,118 @@ pedestrians:
       # Add more waypoints as needed
 ```
 
-### Notes:
+Notes:
 - For cones, specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
 - For pedestrians, define a trajectory as a series of waypoints with format: `[time, x, y, z, roll, pitch, yaw]`.
 - The `time` value in pedestrian trajectories represents when the pedestrian should reach that waypoint.
 - Pedestrians will follow the trajectory and loop if configured in the YAML file.
 
-## Example Usage
+#### Example Usage
 
 See the `highbay_track.yaml` file in the `gem_gazebo/scenes/` directory for a complete example.
 ```bash
 source devel/setup.bash
-roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416 vehicle_name:=e4 custom_scene:=true
+roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" x:=12.5 y:=-21 yaw:=3.1416 custom_scene:=true
 ```
 
 ![Custom Scene Highbay](./images/custom_scene_highbay.gif)
 
+### E2 Vehicle
+To use the E2 vehicle instead, set the parameter `vehicle_name` to `e2`:
+
+### Example Environment and their launch commands
+#### Track1 Environment
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="track1.world" vehicle_name:=e2
+```
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_sensor_info.launch
+```
+
+<a href="url"><img src="./images/simple_track_rviz.png" width="600"></a>
+
+<a href="url"><img src="./images/simple_track_gazebo.png" width="600"></a>
+
+##### Demo of Pure Pursuit Controller
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="track1.world" vehicle_name:=e2
+rosrun gem_pure_pursuit_sim pure_pursuit_sim.py
+```
+
+<a href="url"><img src="./images/pp_controller.gif" width="600"></a>
+
+##### Demo of Stanley Controller
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="track1.world" vehicle_name:=e2
+rosrun gem_stanley_sim stanley_sim.py
+```
+
+<a href="url"><img src="./images/stanley_controller_rviz.gif" width="600"></a>
+
+<a href="url"><img src="./images/stanley_controller_gazebo.gif" width="600"></a>
+
+#### Track2 Environment
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="track2.world" vehicle_name:=e2 y:=-98.5
+```
+
+<a href="url"><img src="./images/track2_gazebo.png" width="600"></a>
+
+#### Example Environment
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch vehicle_name:=e2
+```
+
+<a href="url"><img src="./images/example_rviz.png" width="600"></a>
+
+<a href="url"><img src="./images/example_gazebo.png" width="600"></a>
+
+#### Highbay Environment
+
+```bash
+source devel/setup.bash
+roslaunch gem_launch gem_init.launch world_name:="highbay_track.world" vehicle_name:=e2 x:=12.5 y:=-21 yaw:=3.1416
+```
+
+<a href="url"><img src="./images/highbay_rviz.png" width="600"></a>
+
+<a href="url"><img src="./images/highbay_gazebo.png" width="600"></a>
+
 # Utils Scripts
 
 ## set_pos.py
-To set the position and yaw of the E4 vehicle, run the set_pos python script in the utils folder.
+To set the position and yaw of the vehicle, run the set_pos python script in the utils folder.
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
-python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
+  python3 utils/set_pos.py --x 12.5  --y -21 --yaw 3.1416 
 ```
 
 will set the vehicle in a position where the loop is aligned with the highbay_backlot_p.csv
 
 ## generate_waypoints.py
-To manually steer the car and periodically record waypoints to the terminal, run
+To manually steer the car and record waypoints to a csv file, run
 
 ```bash
 source devel/setup.bash
 cd src/POLARIS_GEM_Simulator
 python3 utils/generate_waypoints.py
 ```
-The controls are: W/S - forward/back | A/D - left/right | Q - quit
+The controls are: W/S - forward/back | A/D - left/right | C - record waypoint | Q - quit
 
-The coordinates may need to be manually transformed to whatever frame you desire
+The Lattitude/Longitude are recorded in both start frame and global frame.
 
 
 

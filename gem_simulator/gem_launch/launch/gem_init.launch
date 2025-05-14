@@ -1,11 +1,22 @@
 <launch>
-  <!-- ────── Core Gazebo world ────── -->
-  <arg name="paused"        default="false"/>
-  <arg name="use_sim_time"  default="true"/>
-  <arg name="gui"           default="true"/>
-  <arg name="headless"      default="false"/>
-  <arg name="debug"         default="false"/>
-  <arg name="world_name"    default="example.world"/>
+  <!-- Gazebo Init -->
+  <arg name="paused" default="false" />
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="headless" default="false" />
+  <arg name="debug" default="false" />
+  <arg name="world_name" default="example.world" />
+  <arg name="vehicle_name" default="e4" />
+  <arg name="scene_name" default="$(eval arg('world_name').split('.world')[0])" />
+  <arg name="custom_scene" default="false" />
+  <!-- Define a condition for highbay world -->
+  <arg name="is_highbay" default="$(eval arg('world_name') == 'highbay_track.world')" />
+  <!-- Define RViz config suffix based on world -->
+  <arg name="rviz_suffix" default="$(eval '_high_bay' if arg('is_highbay') else '')" />
+  <!-- Set velodyne flag -->
+  <arg name="velodyne_points" default="false" />
+  <!-- Select appropriate RViz config -->
+  <arg name="rviz_config" default="$(eval 'gem_velodyne' if arg('velodyne_points') else 'gem_' + arg('vehicle_name') + arg('rviz_suffix'))" />
 
   <!-- Vehicle & scene parameters -->
   <arg name="vehicle_name"  default="e2"/>
@@ -28,7 +39,11 @@
     <arg name="world_name"   value="$(find gem_gazebo)/worlds/$(arg world_name)"/>
   </include>
 
-  <!-- Spawn the GEM vehicle -->
+  <!-- Spawn the GEM Car -->
+  <arg name="x" default="0" />
+  <arg name="y" default="0" />
+  <arg name="yaw" default="0.0" />
+
   <include file="$(find gem_gazebo)/launch/gem_vehicle.launch">
     <arg name="x"            value="$(arg x)"/>
     <arg name="y"            value="$(arg y)"/>
@@ -57,13 +72,19 @@
         if="$(arg custom_scene)">
     <param name="yaml_path" value="$(arg scene_yaml)"/>
   </node>
+  
+  <!-- INSNavGeod Publisher Node: Combines IMU and GPS data -->
+  <node pkg="gem_gazebo" type="insnavgeod_publisher.py" name="insnavgeod">
+    <param name="vehicle_name" value="gem_$(arg vehicle_name)" />
+  </node>
+  
+  <!-- RViz with appropriate config -->
+  <node name="rviz" pkg="rviz" type="rviz"
+    args="-d $(find gem_launch)/config_rviz/$(arg rviz_config).rviz" />
 
-  <!-- INS/GPS publisher node -->
-  <node pkg="gem_gazebo" type="insnavgeod_publisher.py" name="insnavgeod"/>
+  <!-- GNSS Image node - only runs in highbay world -->
+  <node name="gem_gnss_image_node" pkg="gem_gazebo" type="gem_gnss_image.py" if="$(arg is_highbay)">
+    <param name="vehicle_name" value="gem_$(arg vehicle_name)" />
+  </node>
 
-  <!-- RViz preset -->
-  <node name="rviz"
-        pkg="rviz"
-        type="rviz"
-        args="-d $(find gem_launch)/config_rviz/gem_$(arg vehicle_name).rviz"/>
 </launch>
