@@ -67,7 +67,7 @@ Try running the sample workload from the [NVIDIA Container Toolkit](https://docs
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
+You should see the nvidia-smi output similar to [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html#:~:text=all%20ubuntu%20nvidia%2Dsmi-,Your%20output%20should%20resemble%20the%20following%20output%3A,-%2B%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2B%0A%7C%20NVIDIA%2DSMI%20535.86.10).
 
 If you see the output, you are good to go. Otherwise, you will need to install the Docker and NVidia Container Toolkit by following the instructions. 
 - For **Docker**, follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -178,7 +178,12 @@ objects:
     rpy: [roll, pitch, yaw]
   
   - name: traffic_light
-    source: {type: sdf, uri: "model://traffic_light"}
+    source: {type: mesh, uri: "model://traffic_light/meshes/traffic_light.dae", scale: [0.3, 0.3, 0.3]}
+    xyz: [x, y, z]
+    rpy: [roll, pitch, yaw]
+    
+  - name: stop_sign
+    source: {type: sdf, uri: "model://stop_sign"}
     xyz: [x, y, z]
     rpy: [roll, pitch, yaw]
 
@@ -207,6 +212,7 @@ Notes:
   - Both objects and agents use the `source` parameter with two fields:
     - `type`: Can be "fuel" (Gazebo Fuel model), "mesh" (direct mesh file), or "sdf" (local model)
     - `uri`: The location of the model resource (Fuel URL, mesh file path, or model URI)
+    - `scale`: (Optional) Only applies to mesh type. Scales the mesh in [x, y, z] directions. Default is [1.0, 1.0, 1.0]
 
 - **Objects Section**:
   - Specify a unique `name`, position `xyz` and orientation `rpy` (in radians).
