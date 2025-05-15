@@ -34,6 +34,7 @@ This simulator was initially developed by Hang Cui for e2. It is currently under
 - [Utils Scripts](#utils-scripts)
   - [set\_pos.py](#set_pospy)
   - [generate\_waypoints.py](#generate_waypointspy)
+  - [collision_logger.py](#collision_loggerpy)
 
 ## Creating a Workspace
 
@@ -355,3 +356,20 @@ The controls are: W/S - forward/back | A/D - left/right | R - start/stop waypoin
 
 Waypoints are recorded to a utils/waypoints/waypoints.csv directory.
 The lattitude, longitude, and heading are recorded in start frame.
+
+## collision_logger.py
+To monitor and log collision events between the vehicle and other objects in the simulation, run:
+
+```bash
+source devel/setup.bash
+rosrun gem_gazebo collision_logger.py
+```
+
+The logger will:
+- Create a timestamped log file in the `logs` directory
+- Monitor collisions between vehicle parts (body, front bumper, rear bumper) and other objects
+- Display collision information in real-time, including:
+  - Collision location
+  - Contact normal
+  - Collision depth
+- Log all collision data to a file for later analysis

@@ -69,6 +69,25 @@
 
   <gazebo reference="base_link">
     <material>Gazebo/White</material>
+    <sensor type="contact" name="base_contact_sensor">
+      <update_rate>50</update_rate>
+      <always_on>true</always_on>
+      <contact>
+        <collision>base_footprint_fixed_joint_lump__base_link_collision</collision>
+      </contact>
+      <plugin name="base_bumper" filename="libgazebo_ros_bumper.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/contacts:=contact_sensor</remapping>
+        </ros>
+        <frameName>base_link</frameName>
+        <bumperTopicName>contact_sensor</bumperTopicName>
+        <updateRate>50</updateRate>
+        <contactTopicName>contact_sensor</contactTopicName>
+        <verbose>true</verbose>
+        <alwaysOn>true</alwaysOn>
+      </plugin>
+    </sensor>
   </gazebo>
 
   <gazebo reference="chair_link">
@@ -85,12 +104,27 @@
   </gazebo>
   -->
 
-  <gazebo reference="front_rack_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
-
   <gazebo reference="rear_rack_link">
     <material>Gazebo/Black</material>
+    <sensor type="contact" name="rear_rack_contact_sensor">
+      <update_rate>50</update_rate>
+      <always_on>true</always_on>
+      <contact>
+        <collision>base_footprint_fixed_joint_lump__rear_rack_link_collision_21</collision>
+      </contact>
+      <plugin name="rear_rack_bumper" filename="libgazebo_ros_bumper.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/contacts:=contact_sensor</remapping>
+        </ros>
+        <frameName>rear_rack_link</frameName>
+        <bumperTopicName>contact_sensor</bumperTopicName>
+        <updateRate>50</updateRate>
+        <contactTopicName>contact_sensor</contactTopicName>
+        <verbose>true</verbose>
+        <alwaysOn>true</alwaysOn>
+      </plugin>
+    </sensor>
   </gazebo>
 
   <gazebo reference="top_rack_link">
@@ -570,6 +604,29 @@
         <distortionK3>0.0</distortionK3>
         <distortionT1>0.0</distortionT1>
         <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="front_rack_link">
+    <material>Gazebo/Black</material>
+    <sensor type="contact" name="front_rack_contact_sensor">
+      <update_rate>50</update_rate>
+      <always_on>true</always_on>
+      <contact>
+        <collision>base_footprint_fixed_joint_lump__front_rack_link_collision_8</collision>
+      </contact>
+      <plugin name="front_rack_bumper" filename="libgazebo_ros_bumper.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/contacts:=contact_sensor</remapping>
+        </ros>
+        <frameName>front_rack_link</frameName>
+        <bumperTopicName>contact_sensor</bumperTopicName>
+        <updateRate>50</updateRate>
+        <contactTopicName>contact_sensor</contactTopicName>
+        <verbose>true</verbose>
+        <alwaysOn>true</alwaysOn>
       </plugin>
     </sensor>
   </gazebo>
