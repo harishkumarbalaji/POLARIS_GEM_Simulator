@@ -18,6 +18,8 @@
 
   <!-- *************************** Base link below *************************** -->
   
+
+  
   <link name="base_footprint"> 
   </link>
 
@@ -52,7 +54,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/base_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/base_link.STL" />
       </geometry>
       <material name="white" />
     </visual>
@@ -60,11 +62,13 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/base_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/base_link.STL" />
       </geometry>
     </collision>
 
   </link>
+
+
 
   <joint name="base_link" type="fixed">
     <origin xyz="0 0 0.44" rpy="0 0 0"/>
@@ -90,14 +94,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/chair_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/chair_link.STL" />
       </geometry>
       <material name="grey" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/chair_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/chair_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -126,7 +130,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/door_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/door_link.STL" />
       </geometry>
       <material name="white" />
     </visual>
@@ -134,7 +138,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/door_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/door_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -163,14 +167,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/top_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/top_rack_link.STL" />
       </geometry>
       <material name="black" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/top_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/top_rack_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -199,7 +203,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_rack_link.STL" />
       </geometry>
       <material name="black" />
     </visual>
@@ -207,7 +211,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_rack_link.STL" />
       </geometry>
     </collision>
 
@@ -237,14 +241,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_rack_link.STL" />
       </geometry>
       <material name="black" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_rack_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_rack_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -273,7 +277,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_head_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_head_light_link.STL" />
       </geometry>
       <material name="white" />
     </visual>
@@ -281,7 +285,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_head_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_head_light_link.STL" />
       </geometry>
     </collision>
 
@@ -311,14 +315,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_head_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_head_light_link.STL" />
       </geometry>
       <material name="white" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_head_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_head_light_link.STL" />
       </geometry>
     </collision>
 
@@ -348,14 +352,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_turn_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_turn_light_link.STL" />
       </geometry>
       <material name="orange" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_turn_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_turn_light_link.STL" />
       </geometry>
     </collision>
 
@@ -385,14 +389,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_turn_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_turn_light_link.STL" />
       </geometry>
       <material name="orange" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_turn_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_turn_light_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -421,14 +425,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_light_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_light_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -457,14 +461,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_light_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_light_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -493,14 +497,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_stop_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_stop_light_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_stop_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_stop_light_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -529,14 +533,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_stop_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_stop_light_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_stop_light_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_stop_light_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -565,14 +569,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_blue_outer_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_blue_outer_link.STL" />
       </geometry>
       <material name="blue" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_blue_outer_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_blue_outer_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -601,14 +605,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_I_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_I_link.STL" />
       </geometry>
       <material name="orange" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_I_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_I_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -637,14 +641,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_blue_outer_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_blue_outer_link.STL" />
       </geometry>
       <material name="blue" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_blue_outer_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_blue_outer_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -673,14 +677,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_I_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_I_link.STL" />
       </geometry>
       <material name="orange" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_I_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_I_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -709,14 +713,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_antenna_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_antenna_link.STL" />
       </geometry>
       <material name="grey" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/right_antenna_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/right_antenna_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -745,14 +749,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_antenna_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_antenna_link.STL" />
       </geometry>
       <material name="grey" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/left_antenna_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/left_antenna_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -781,14 +785,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_emergency_button_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_emergency_button_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -817,14 +821,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_emergency_button_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_emergency_button_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -853,14 +857,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_emergency_button_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_left_emergency_button_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -889,14 +893,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_emergency_button_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_emergency_button_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_right_emergency_button_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -919,14 +923,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_light_bar_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_light_bar_link.STL" />
       </geometry>
       <material name="red" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_light_bar_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/rear_light_bar_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -949,14 +953,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_camera_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_camera_link.STL" />
       </geometry>
       <material name="black" />
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_camera_link.STL" />
+        <mesh filename="file://$(find gem_description)/meshes/front_camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1018,7 +1022,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_left_wheel_link.STL"/>
+        <mesh filename="file://$(find gem_description)/meshes/front_left_wheel_link.STL"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1052,7 +1056,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://gem_description/meshes/front_right_wheel_link.STL"/>
+        <mesh filename="file://$(find gem_description)/meshes/front_right_wheel_link.STL"/>
       </geometry>
       <material name="black" />
     </visual>
@@ -1083,7 +1087,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_left_wheel_link.STL"/>
+        <mesh filename="file://$(find gem_description)/meshes/rear_left_wheel_link.STL"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1114,7 +1118,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://gem_description/meshes/rear_right_wheel_link.STL"/>
+        <mesh filename="file://$(find gem_description)/meshes/rear_right_wheel_link.STL"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1204,43 +1208,12 @@
 
   <!-- ************************* Front Camera ************************* -->
 
-  <link name="front_single_camera_link">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.05 0.05 0.05"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.05 0.05 0.05"/>
-      </geometry>
-      <material name="red"/>
-    </visual>
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <!--
-  <joint name="gem_front_camera_joint" type="fixed">
-    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
-    <parent link="front_camera_link"/>
-    <child link="front_single_camera_link"/>
-  </joint>
-  -->
-
   <joint name="gem_front_camera_joint" type="fixed">
     <origin xyz="0.394 0 1.19" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="front_single_camera_link"/>
+    <child link="stereo_camera_link"/>
   </joint>
   
-  
-  <!--
   <link name="stereo_camera_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -1262,13 +1235,39 @@
     </inertial>
   </link>
 
-
-  <joint name="gem_stereo_camera_joint" type="fixed">
-    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
-    <parent link="front_camera_link"/>
-    <child link="stereo_camera_link"/>
-  </joint>
-  -->
+  <!-- Camera Sensor for stereo_camera_link -->
+  <gazebo reference="stereo_camera_link">
+    <sensor type="camera" name="front_camera">
+      <update_rate>30.0</update_rate>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>600</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>gem/front_camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>stereo_camera_link</frameName>
+        <minDepth>0.1</minDepth>
+        <maxDepth>100.0</maxDepth>
+      </plugin>
+    </sensor>
+  </gazebo>
 
   <!-- IMU -->
   <link name="IMU_link">
@@ -1398,6 +1397,78 @@
     <child link="rear_sonar_link"/>
   </joint>
 
+  <!-- Velodyne Lidar -->
+  <link name="velodyne_link">
+    <inertial>
+      <mass value="0.83" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="velodyne_joint" type="fixed">
+    <origin xyz="0.02 0.115 -0.6575" rpy="1.5708 0 3.1416" />
+    <parent link="top_rack_link"/>
+    <child link="velodyne_link"/>
+  </joint>
+
+
+  <!-- Velodyne Lidar Sensor -->
+  <gazebo reference="velodyne_link">
+    <sensor type="gpu_ray" name="velodyne_lidar">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>1875</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.141592653589793</min_angle>
+            <max_angle>3.141592653589793</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>16</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.261799387799</min_angle>
+            <max_angle>0.261799387799</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>1.0</min>
+          <max>100.0</max>
+          <resolution>0.001</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_ray_sensor" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/velodyne</namespace>
+          <remapping>~/out:=points</remapping>
+        </ros>
+        <output_type>sensor_msgs/PointCloud2</output_type>
+        <frame_name>velodyne_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
   <!-- ROS2 Control -->
   <ros2_control name="GazeboSystem" type="system">
     <hardware>
@@ -1456,7 +1527,6 @@
   </ros2_control>
 
 </robot>
-
 
 
 
