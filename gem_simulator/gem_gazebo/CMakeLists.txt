@@ -24,7 +24,13 @@ catkin_install_python(PROGRAMS scripts/drive_straight.py
 catkin_install_python(PROGRAMS scripts/drive_straight_with_camera_stop.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-catkin_install_python(PROGRAMS scripts/lane_follow_camera.py
+catkin_install_python(PROGRAMS scripts/record_teacher_path.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+catkin_install_python(PROGRAMS scripts/teacher_path_follow.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+catkin_install_python(PROGRAMS scripts/collect_pilotnet_data.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 catkin_install_python(PROGRAMS scripts/gem_sensor_info.py
