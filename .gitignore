@@ -22,3 +22,6 @@ log/
 
 # Ignore high bay 3d model
 gem_simulator/gem_gazebo/models/high_bay_3d/
+# PilotNet local artifacts
+pilotnet/runs/
+pilotnet/.venv/
