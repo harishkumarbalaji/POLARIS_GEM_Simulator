@@ -21,6 +21,12 @@ catkin_install_python(PROGRAMS scripts/gem_control.py
 catkin_install_python(PROGRAMS scripts/drive_straight.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+catkin_install_python(PROGRAMS scripts/drive_straight_with_camera_stop.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+catkin_install_python(PROGRAMS scripts/lane_follow_camera.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 catkin_install_python(PROGRAMS scripts/gem_sensor_info.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
