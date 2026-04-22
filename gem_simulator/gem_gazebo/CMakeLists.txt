@@ -33,6 +33,9 @@ catkin_install_python(PROGRAMS scripts/teacher_path_follow.py
 catkin_install_python(PROGRAMS scripts/collect_pilotnet_data.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+catkin_install_python(PROGRAMS scripts/pilotnet_inference.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 catkin_install_python(PROGRAMS scripts/gem_sensor_info.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
