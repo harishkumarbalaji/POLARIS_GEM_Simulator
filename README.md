@@ -35,13 +35,6 @@ cd ~/gem_simulation_ws/src/POLARIS_GEM_Simulator
 bash run_docker_container.sh
 ```
 
-Or use the helper script from this project:
-
-```bash
-cd /home/yuwei/Documents/UIUC-courses/CS588AV/Project
-bash scripts/run_container_and_compile.sh
-```
-
 Inside the container:
 
 ```bash
@@ -67,13 +60,13 @@ Inside the container, the host home directory is mounted at:
 
 That means:
 
-- Host path: `/home/yuwei/teacher_paths/teacher_path.csv`
-- Container path: `/home/yuwei/host/teacher_paths/teacher_path.csv`
+- Host path: `~/teacher_paths/teacher_path.csv`
+- Container path: `/home/$USER/host/teacher_paths/teacher_path.csv`
 
 Same for datasets:
 
-- Host path: `/home/yuwei/pilotnet_data/...`
-- Container path: `/home/yuwei/host/pilotnet_data/...`
+- Host path: `~/pilotnet_data/...`
+- Container path: `/home/$USER/host/pilotnet_data/...`
 
 If you save to `~/teacher_paths` or `~/pilotnet_data` inside the container, the files stay in the container filesystem and will be lost when the container is removed.
 
@@ -118,7 +111,7 @@ Use `w a s d` to drive. After one clean lap, stop the recorder with `Ctrl+C`.
 The path will be saved on the host at:
 
 ```bash
-/home/yuwei/teacher_paths/teacher_path.csv
+~/teacher_paths/teacher_path.csv
 ```
 
 ## Teacher Follow
@@ -147,7 +140,7 @@ rosrun gem_gazebo collect_pilotnet_data.py \
 This writes to the host:
 
 ```bash
-/home/yuwei/pilotnet_data/
+~/pilotnet_data/
 ```
 
 Stop collection with `Ctrl+C`.
@@ -155,17 +148,17 @@ Stop collection with `Ctrl+C`.
 Check the data on the host:
 
 ```bash
-find /home/yuwei/pilotnet_data -name metadata.csv
+find ~/pilotnet_data -name metadata.csv
 ```
 
 ## Train PilotNet
 
 Training is run on the host, not in the ROS container.
 
-From this project directory:
+From the repo training directory:
 
 ```bash
-cd /home/yuwei/Documents/UIUC-courses/CS588AV/Project
+cd ~/gem_simulation_ws/src/POLARIS_GEM_Simulator/pilotnet
 ```
 
 Create a local `uv` environment:
@@ -187,8 +180,8 @@ Train:
 
 ```bash
 python train_pilotnet.py \
-  --data-root /home/yuwei/pilotnet_data \
-  --output-dir pilotnet_runs/run_001 \
+  --data-root ~/pilotnet_data \
+  --output-dir runs/run_001 \
   --epochs 20 \
   --batch-size 256 \
   --learning-rate 1e-3 \
@@ -198,7 +191,7 @@ python train_pilotnet.py \
 Outputs are written to:
 
 ```bash
-pilotnet_runs/run_001/
+runs/run_001/
 ```
 
 Including:
@@ -212,7 +205,7 @@ Including:
 
 Run this inside the container after `catkin_make` and `source devel/setup.bash`.
 
-The checkpoint path below uses the container view of the host project directory.
+The checkpoint path below uses the container view of the host repository.
 
 Pre-requsite
 TODO: MOve to Dockerfile
@@ -233,7 +226,7 @@ python3 utils/set_pos.py --x -5.5 --y -21 --yaw 3.1416
 
 source devel/setup.bash
 rosrun gem_gazebo pilotnet_inference.py \
-  _checkpoint:=/home/$USER/host/Documents/UIUC-courses/CS588AV/Project/pilotnet_runs/run_001/best_model.pt \
+  _checkpoint:=/home/$USER/host/gem_simulation_ws/src/POLARIS_GEM_Simulator/pilotnet/runs/run_001/best_model.pt \
   _speed:=0.35 \
   _max_steering:=0.55 \
   _steering_scale:=1.0 \
@@ -249,11 +242,11 @@ Notes:
 
 ## Files Added For This Pipeline
 
-Host project:
+Training directory:
 
-- `/home/yuwei/Documents/UIUC-courses/CS588AV/Project/pilotnet_model.py`
-- `/home/yuwei/Documents/UIUC-courses/CS588AV/Project/train_pilotnet.py`
-- `/home/yuwei/Documents/UIUC-courses/CS588AV/Project/PILOTNET_PIPELINE.md`
+- `pilotnet/pilotnet_model.py`
+- `pilotnet/train_pilotnet.py`
+- `pilotnet/README.md`
 
 Simulator repo:
 
